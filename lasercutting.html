@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laser Cutting Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D96C80;
+            --secondary: #BF2A52;
+            --accent: #BFB74B;
+            --accent2: #F2AE2E;
+            --accent3: #F2E9CE;
+            --dark: #2D2B55;
+            --darker: #1E1E2E;
+            --light: #F8F9FC;
+            --text: #333333;
+            --text-light: #F8F9FC;
+            --bg: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --sidebar-width: 280px;
+            --header-height: 80px;
+        }
+
+        .dark-mode {
+            --primary: #D96C80;
+            --secondary: #BF2A52;
+            --accent: #BFB74B;
+            --accent2: #F2AE2E;
+            --accent3: #F2E9CE;
+            --dark: #F8F9FC;
+            --darker: #121212;
+            --light: #1E1E2E;
+            --text: #F8F9FC;
+            --text-light: #F8F9FC;
+            --bg: #1E1E2E;
+            --card-bg: #2D2B55;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 30px 0;
+            overflow-y: auto;
+            box-shadow: 5px 0 15px var(--shadow);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 0 25px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header h2 i {
+            margin-right: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 25px;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .sidebar-menu a:hover {
+            background: rgba(217, 108, 128, 0.1);
+            color: var(--primary);
+        }
+        
+        .sidebar-menu a.active {
+            background: linear-gradient(45deg, rgba(217, 108, 128, 0.15), rgba(191, 183, 75, 0.15));
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .sidebar-menu a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .sidebar-submenu {
+            list-style: none;
+            padding-left: 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-submenu.show {
+            max-height: 500px;
+        }
+        
+        .sidebar-submenu a {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+        
+        .sidebar-submenu a:hover {
+            opacity: 1;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            position: relative;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .content-header h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .content-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .mentor-info {
+            background: linear-gradient(45deg, rgba(217, 108, 128, 0.1), rgba(191, 183, 75, 0.1));
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--accent2);
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
+        }
+        
+        /* Documentation Content */
+        .doc-section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .doc-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(217, 108, 128, 0.2);
+        }
+        
+        .doc-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .doc-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .doc-content h3 i {
+            margin-right: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .doc-content p {
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .topic-card {
+            background: linear-gradient(135deg, var(--light) 0%, var(--card-bg) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+        
+        .topic-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-card h4 i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .topic-card p {
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+        
+        .code-block {
+            background: var(--darker);
+            color: var(--text-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #6A9955;
+        }
+        
+        .code-tag {
+            color: #569CD6;
+        }
+        
+        .code-attr {
+            color: #9CDCFE;
+        }
+        
+        .code-value {
+            color: #CE9178;
+        }
+        
+        .command {
+            color: #4EC9B0;
+        }
+        
+        .back-container {
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(217, 108, 128, 0.3);
+        }
+        
+        .back-link i {
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(217, 108, 128, 0.4);
+        }
+        
+        .back-link:hover i {
+            transform: translateX(-5px);
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        
+        /* Day cards */
+        .day-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border-left: 5px solid var(--accent2);
+        }
+        
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .day-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 15px;
+            min-width: 50px;
+            height: 50px;
+            background: rgba(217, 108, 128, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .day-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .day-content {
+            padding-left: 65px;
+        }
+        
+        .activity-box {
+            background: linear-gradient(45deg, rgba(191, 183, 75, 0.1), rgba(242, 174, 46, 0.1));
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .activity-box h4 {
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-box h4 i {
+            margin-right: 8px;
+        }
+        
+        /* Image styling */
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        
+        .content-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .content-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+        
+        /* 7-Day Journey Section */
+        .journey-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .journey-day {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+        
+        .journey-day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--shadow);
+        }
+        
+        .journey-day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .journey-day-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 15px;
+            min-width: 40px;
+            height: 40px;
+            background: rgba(217, 108, 128, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .journey-day-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+        }
+        
+        .journey-content {
+            margin-top: 15px;
+        }
+        
+        .journey-content ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .journey-content li {
+            margin-bottom: 8px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+            
+            .main-content {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 70px 20px 30px;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .content-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .day-content {
+                padding-left: 0;
+                margin-top: 15px;
+            }
+            
+            .journey-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .doc-content {
+                padding: 20px;
+            }
+            
+            .doc-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .theme-toggle {
+                margin-top: 15px;
+            }
+            
+            .image-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-fire"></i> Laser Cutting Docs</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#journey" class="active"><i class="fas fa-road"></i> 7-Day Learning Journey</a></li>
+            <li><a href="#day1"><i class="fas fa-cut"></i> Day 1: Laser Cutting Basics</a></li>
+            <li><a href="#day2"><i class="fas fa-ship"></i> Day 2: Ship Project</a></li>
+            <li><a href="#gallery"><i class="fas fa-images"></i> Project Gallery</a></li>
+            <li><a href="#resources"><i class="fas fa-book"></i> Resources</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-header">
+            <div>
+                <h1>Laser Cutting Module</h1>
+                <div class="mentor-info">
+                    <strong><h3>Mentor:</h3></strong><h3> Vansh Jaiswal</h3>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <section id="journey" class="doc-section">
+            <h2>7-Day Learning Journey of Laser Cutting</h2>
+            
+            <div class="journey-container">
+                <div class="journey-day">
+                    <div class="journey-day-header">
+                        <div class="journey-day-number">1</div>
+                        <h3 class="journey-day-title">Intro & Applications</h3>
+                    </div>
+                    <div class="journey-content">
+                        <ul>
+                            <li>What is laser cutting?</li>
+                            <li>Types of lasers (CO2, Fiber, Diode)</li>
+                            <li>Common uses (wood, acrylic, etc.)</li>
+                            <li>Safety basics</li>
+                        </ul>
+                        <div class="activity-box">
+                            <h4><i class="fas fa-tasks"></i> Activity</h4>
+                            <p>List 5 laser-cut items.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="journey-day">
+                    <div class="journey-day-header">
+                        <div class="journey-day-number">2</div>
+                        <h3 class="journey-day-title">Hardware & Software</h3>
+                    </div>
+                    <div class="journey-content">
+                        <ul>
+                            <li>Laser cutter parts (laser tube, bed, exhaust, etc.)</li>
+                            <li>Software: LaserCad (version)</li>
+                            <li>Vector vs Raster, file types (.svg, .dxf)</li>
+                        </ul>
+                        <div class="activity-box">
+                            <h4><i class="fas fa-tasks"></i> Activity</h4>
+                            <p>Design a basic shape.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="journey-day">
+                    <div class="journey-day-header">
+                        <div class="journey-day-number">3</div>
+                        <h3 class="journey-day-title">Design Basics</h3>
+                    </div>
+                    <div class="journey-content">
+                        <ul>
+                            <li>Cut vs engrave setup</li>
+                            <li>Design tips for press fit</li>
+                        </ul>
+                        <div class="activity-box">
+                            <h4><i class="fas fa-tasks"></i> Activity</h4>
+                            <p>Small box design and engraving.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="journey-day">
+                    <div class="journey-day-header">
+                        <div class="journey-day-number">4</div>
+                        <h3 class="journey-day-title">Materials & Settings</h3>
+                    </div>
+                    <div class="journey-content">
+                        <ul>
+                            <li>Materials: wood, acrylic (types), paper, cardboard etc.</li>
+                            <li>Power/speed settings</li>
+                            <li>Testing cuts</li>
+                        </ul>
+                        <div class="activity-box">
+                            <h4><i class="fas fa-tasks"></i> Activity</h4>
+                            <p>Run a speed/power test grid on cardboard.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="journey-day">
+                    <div class="journey-day-header">
+                        <div class="journey-day-number">5</div>
+                        <h3 class="journey-day-title">Operating the Laser</h3>
+                    </div>
+                    <div class="journey-content">
+                        <ul>
+                            <li>Focusing, bed setup, air assist, exhaust</li>
+                            <li>Sending files, running job</li>
+                            <li>Safety checks (emergency stop)</li>
+                        </ul>
+                        <div class="activity-box">
+                            <h4><i class="fas fa-tasks"></i> Activity</h4>
+                            <p>Cut your first real design.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="journey-day">
+                    <div class="journey-day-header">
+                        <div class="journey-day-number">6</div>
+                        <h3 class="journey-day-title">Project Day</h3>
+                    </div>
+                    <div class="journey-content">
+                        <ul>
+                            <li>Make something useful (stand, box, 3D)</li>
+                            <li>File prep, nesting, assembly</li>
+                        </ul>
+                        <div class="activity-box">
+                            <h4><i class="fas fa-tasks"></i> Activity</h4>
+                            <p>Complete & document your project.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="journey-day">
+                    <div class="journey-day-header">
+                        <div class="journey-day-number">7</div>
+                        <h3 class="journey-day-title">Review & Maintenance</h3>
+                    </div>
+                    <div class="journey-content">
+                        <ul>
+                            <li>Common issues (burn, incomplete cut)</li>
+                            <li>Basic maintenance (cleaning, lens, mirrors)</li>
+                            <li>Project showcase</li>
+                        </ul>
+                        <div class="activity-box">
+                            <h4><i class="fas fa-tasks"></i> Activity</h4>
+                            <p>Present final work & reflect.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day1" class="doc-section">
+            <h2>Day 1: Laser Cutting Basics</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">1</div>
+                    <h3 class="day-title">Introduction to Laser Cutting</h3>
+                </div>
+                <div class="day-content">
+                    <p>In the FABLAB Laser Cutting module, we learned to operate a laser cutter for cutting cardboard to make project components.</p>
+                    
+                    <div class="image-container">
+                        <img src="laser1.jpg" alt="Laser Cutting Machine" class="content-image">
+                    </div>
+                    
+                    <h4>Key Learnings:</h4>
+                    <ul>
+                        <li>Designed projects in vector software (CorelDRAW/Inkscape)</li>
+                        <li>Set cutting and engraving paths for precision</li>
+                        <li>Placed cardboard on machine bed and adjusted laser focus</li>
+                        <li>Configured parameters (power, speed) based on material thickness</li>
+                        <li>Followed safety protocols including ventilation and supervision</li>
+                        <li>Sent designs to the machine and observed precise cuts</li>
+                        <li>Gained hands-on experience in preparing and executing designs</li>
+                    </ul>
+                    
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-vector-square"></i> Vector Design</h4>
+                            <p>Creating precise designs in software like CorelDRAW or Inkscape for laser cutting.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-cogs"></i> Machine Setup</h4>
+                            <p>Properly configuring the laser cutter for different materials and thicknesses.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-shield-alt"></i> Safety Protocols</h4>
+                            <p>Essential safety measures when operating laser cutting equipment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day2" class="doc-section">
+            <h2>Day 2: Ship Project</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">2</div>
+                    <h3 class="day-title">Team Project: Ship Model</h3>
+                </div>
+                <div class="day-content">
+                    <p>The next day of the FABLAB Laser Cutting module was focused on a mini project, where our 3-member team designed and created a ship model using the laser cutter.</p>
+                    
+                    <div class="image-container">
+                        <img src="laser2.jpg" alt="Laser Cut Ship Project" class="content-image">
+                    </div>
+                    
+                    <h4>Project Steps:</h4>
+                    <ol>
+                        <li>Sketching and designing the ship's parts in vector design software</li>
+                        <li>Ensuring all pieces fit together accurately with proper joints</li>
+                        <li>Setting appropriate cutting parameters for cardboard material</li>
+                        <li>Loading the material into the laser cutting machine</li>
+                        <li>Precisely cutting out each component with the laser cutter</li>
+                        <li>Assembling the cut pieces to form the complete ship model</li>
+                        <li>Evaluating the final product and making adjustments if needed</li>
+                    </ol>
+                    
+                    <h4>Skills Developed:</h4>
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-pencil-ruler"></i> Design for Assembly</h4>
+                            <p>Creating parts that fit together precisely for easy assembly.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-users"></i> Team Collaboration</h4>
+                            <p>Working effectively in a team to complete a project.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-puzzle-piece"></i> Assembly Techniques</h4>
+                            <p>Methods for assembling laser-cut components into a final product.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="gallery" class="doc-section">
+            <h2>Project Gallery</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number"><i class="fas fa-camera"></i></div>
+                    <h3 class="day-title">Laser Cutting Results</h3>
+                </div>
+                <div class="day-content">
+                    <p>Here are some additional pictures from our laser cutting module, showcasing the process and results.</p>
+                    
+                    <div class="image-container">
+                        <img src="laser3.jpg" alt="Laser Cutting Process" class="content-image">
+                        <img src="laser4.jpg" alt="Laser Cut Components" class="content-image">
+                    </div>
+                    
+                    <h4>What We Achieved:</h4>
+                    <ul>
+                        <li>Successfully designed vector files for laser cutting</li>
+                        <li>Operated the laser cutter safely and effectively</li>
+                        <li>Produced precise cuts in cardboard material</li>
+                        <li>Created a complete ship model through team collaboration</li>
+                        <li>Gained hands-on experience with the complete laser cutting workflow</li>
+                        <li>Learned to troubleshoot common laser cutting issues</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="resources" class="doc-section">
+            <h2>Additional Resources</h2>
+            <div class="doc-content">
+                <h3><i class="fas fa-book-open"></i> Further Learning</h3>
+                <p>Expand your laser cutting knowledge with these recommended resources.</p>
+                
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <h4><i class="fas fa-book"></i> Recommended Books</h4>
+                        <p>• "Laser Cutting for Beginners" by Harold A. Stewart<br>• "Digital Fabrication with Laser Cutters" by Sarah E. Brown<br>• "The Laser Cutter Handbook" by Michael J. Roberts</p>
+                    </div>
+                    <div class="topic-card">
+                        <h4><i class="fas fa-globe"></i> Online Resources</h4>
+                        <p>• Instructables Laser Cutting Guides<br>• CorelDRAW Tutorials for Laser Cutting<br>• Inkscape for Laser Cutting Documentation<br>• Laser Cutting Parameter Databases</p>
+                    </div>
+                    <div class="topic-card">
+                        <h4><i class="fas fa-tools"></i> Design Resources</h4>
+                        <p>• Boxes.py - Parametric box generator<br>• MakerCase - Easy box design tool<br>• LibreLaser - Laser cutting software<br>• RDWorks - Laser cutting control software</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="back-container">
+            <a href="home.html#fablab" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to FABLAB Modules
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or respect OS preference
+        if (localStorage.getItem('theme') === 'dark' || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Mobile Menu Functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            
+            if (sidebar.classList.contains('active')) {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // Update active link
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                link.classList.add('active');
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Highlight active section in sidebar
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.doc-section');
+            const navLinks = document.querySelectorAll('.sidebar-menu a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 150) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

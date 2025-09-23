@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI/ML with Python Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D96C80;
+            --secondary: #BF2A52;
+            --accent: #BFB74B;
+            --accent2: #F2AE2E;
+            --accent3: #F2E9CE;
+            --dark: #2D2B55;
+            --darker: #1E1E2E;
+            --light: #F8F9FC;
+            --text: #333333;
+            --text-light: #F8F9FC;
+            --bg: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --sidebar-width: 280px;
+            --header-height: 80px;
+        }
+
+        .dark-mode {
+            --primary: #D96C80;
+            --secondary: #BF2A52;
+            --accent: #BFB74B;
+            --accent2: #F2AE2E;
+            --accent3: #F2E9CE;
+            --dark: #F8F9FC;
+            --darker: #121212;
+            --light: #1E1E2E;
+            --text: #F8F9FC;
+            --text-light: #F8F9FC;
+            --bg: #1E1E2E;
+            --card-bg: #2D2B55;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 30px 0;
+            overflow-y: auto;
+            box-shadow: 5px 0 15px var(--shadow);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 0 25px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header h2 i {
+            margin-right: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 25px;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .sidebar-menu a:hover {
+            background: rgba(217, 108, 128, 0.1);
+            color: var(--primary);
+        }
+        
+        .sidebar-menu a.active {
+            background: linear-gradient(45deg, rgba(217, 108, 128, 0.15), rgba(191, 183, 75, 0.15));
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .sidebar-menu a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .sidebar-submenu {
+            list-style: none;
+            padding-left: 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-submenu.show {
+            max-height: 500px;
+        }
+        
+        .sidebar-submenu a {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+        
+        .sidebar-submenu a:hover {
+            opacity: 1;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            position: relative;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .content-header h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .content-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
+        }
+        
+        /* Documentation Content */
+        .doc-section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .doc-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(217, 108, 128, 0.2);
+        }
+        
+        .doc-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .doc-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .doc-content h3 i {
+            margin-right: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .doc-content p {
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .topic-card {
+            background: linear-gradient(135deg, var(--light) 0%, var(--card-bg) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+        
+        .topic-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-card h4 i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .topic-card p {
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+        
+        .code-block {
+            background: var(--darker);
+            color: var(--text-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #6A9955;
+        }
+        
+        .code-tag {
+            color: #569CD6;
+        }
+        
+        .code-attr {
+            color: #9CDCFE;
+        }
+        
+        .code-value {
+            color: #CE9178;
+        }
+        
+        .command {
+            color: #4EC9B0;
+        }
+        
+        .back-container {
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(217, 108, 128, 0.3);
+        }
+        
+        .back-link i {
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(217, 108, 128, 0.4);
+        }
+        
+        .back-link:hover i {
+            transform: translateX(-5px);
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        
+        /* Day cards */
+        .day-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border-left: 5px solid var(--accent2);
+        }
+        
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .day-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 15px;
+            min-width: 50px;
+            height: 50px;
+            background: rgba(217, 108, 128, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .day-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .day-content {
+            padding-left: 65px;
+        }
+        
+        /* Image styling */
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        
+        .content-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .content-image:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+        
+        /* Assignment styling */
+        .assignment {
+            background: linear-gradient(135deg, var(--accent3) 0%, var(--card-bg) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .assignment h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .assignment h4 i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+            
+            .main-content {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 70px 20px 30px;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .content-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .day-content {
+                padding-left: 0;
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .doc-content {
+                padding: 20px;
+            }
+            
+            .doc-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .theme-toggle {
+                margin-top: 15px;
+            }
+            
+            .image-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fas fa-brain"></i> AI/ML Docs</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#day1" class="active"><i class="fab fa-python"></i> Day 1: Python Basics</a></li>
+            <li><a href="#day2"><i class="fas fa-calculator"></i> Day 2: NumPy Library</a></li>
+            <li><a href="#day3"><i class="fas fa-chart-line"></i> Day 3: Matplotlib</a></li>
+            <li><a href="#day4"><i class="fas fa-chart-bar"></i> Day 4: Seaborn</a></li>
+            <li><a href="#practice"><i class="fas fa-laptop-code"></i> Practice & Assignments</a></li>
+            <li><a href="#resources"><i class="fas fa-book"></i> Resources</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1>AI/ML with Python Module</h1>
+             <div class="mentor-info">
+                    <strong><h3>Mentor:</h3></strong><h3> Shrideep Dhore , Hridaya Amle & Prathamesh Ingle</h3>
+                </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <section id="day1" class="doc-section">
+            <h2>Day 1: Python Basics for AI/ML</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">1</div>
+                    <h3 class="day-title">Python Fundamentals</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the first day, we learned the basics of Python programming which form the foundation for AI and Machine Learning.</p>
+                    
+                    <h4>Key Python Concepts:</h4>
+                    <ul>
+                        <li>Variables and Data Types (integers, floats, strings, booleans)</li>
+                        <li>Data Structures (lists, tuples, dictionaries, sets)</li>
+                        <li>Control Flow (if statements, for and while loops)</li>
+                        <li>Functions and Lambda expressions</li>
+                        <li>File I/O operations</li>
+                        <li>Error handling with try-except blocks</li>
+                        <li>List comprehensions</li>
+                    </ul>
+                    
+                    <h4>Example Python Code:</h4>
+                    <div class="code-block">
+                        <span class="code-comment"># Basic Python operations</span><br>
+                        <span class="code-comment"># List comprehension example</span><br>
+                        numbers = [1, 2, 3, 4, 5]<br>
+                        squares = [x**2 for x in numbers]<br>
+                        print(squares)  <span class="code-comment"># Output: [1, 4, 9, 16, 25]</span><br><br>
+                        
+                        <span class="code-comment"># Dictionary example</span><br>
+                        student = {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;"name": "John",<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;"age": 21,<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;"major": "Data Science"<br>
+                        }<br>
+                        print(student["name"])  <span class="code-comment"># Output: John</span>
+                    </div>
+                    
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-code"></i> Python Syntax</h4>
+                            <p>Clean and readable syntax with significant whitespace.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-cubes"></i> Data Structures</h4>
+                            <p>Powerful built-in data structures for efficient data handling.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-function"></i> Functions</h4>
+                            <p>First-class functions and support for functional programming.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day2" class="doc-section">
+            <h2>Day 2: NumPy Library</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">2</div>
+                    <h3 class="day-title">Numerical Computing with NumPy</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the second day, we explored NumPy, the fundamental package for scientific computing in Python.</p>
+                    
+                    <div class="image-container">
+                        <img src="numpy.png" alt="NumPy Arrays" class="content-image">
+                    </div>
+                    
+                    <h4>NumPy Key Features:</h4>
+                    <ul>c:\Users\sayya\Pictures\Screenshots\Screenshot 2025-09-20 234540.png
+                        <li>Powerful N-dimensional array object</li>
+                        <li>Sophisticated broadcasting functions</li>
+                        <li>Tools for integrating C/C++ and Fortran code</li>
+                        <li>Linear algebra, Fourier transform, and random number capabilities</li>
+                    </ul>
+                    
+                    <h4>NumPy Code Examples:</h4>
+                    <div class="code-block">
+                        <span class="code-comment"># Importing numpy</span><br>
+                        import numpy as np<br><br>
+                        
+                        <span class="code-comment"># Creating arrays</span><br>
+                        arr1 = np.array([1, 2, 3, 4, 5])<br>
+                        arr2 = np.zeros((3, 3))  <span class="code-comment"># 3x3 array of zeros</span><br>
+                        arr3 = np.ones((2, 4))   <span class="code-comment"># 2x4 array of ones</span><br><br>
+                        
+                        <span class="code-comment"># Array operations</span><br>
+                        a = np.array([1, 2, 3])<br>
+                        b = np.array([4, 5, 6])<br>
+                        print(a + b)  <span class="code-comment"># Output: [5 7 9]</span><br>
+                        print(a * b)  <span class="code-comment"># Output: [4 10 18]</span><br><br>
+                        
+                        <span class="code-comment"># Reshaping arrays</span><br>
+                        arr = np.arange(12)<br>
+                        reshaped = arr.reshape(3, 4)<br>
+                        print(reshaped)
+                    </div>
+                    
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-th"></i> ND Arrays</h4>
+                            <p>Efficient multi-dimensional arrays for numerical data.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-broadcast-tower"></i> Broadcasting</h4>
+                            <p>Powerful broadcasting capabilities for array operations.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-random"></i> Random Module</h4>
+                            <p>Comprehensive random number generation for simulations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day3" class="doc-section">
+            <h2>Day 3: Matplotlib Library</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">3</div>
+                    <h3 class="day-title">Data Visualization with Matplotlib</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the third day, we learned about Matplotlib, a comprehensive library for creating static, animated, and interactive visualizations.</p>
+                    
+                    <div class="image-container">
+                     <img src="matplotlib.png" alt="Matplotlib Visualization" class="content-image">
+                    <img src="matplotlib1.png" alt="Matplotlib Visualization" class="content-image">
+
+                    </div>
+                    
+                    <h4>Matplotlib Key Features:</h4>
+                    <ul>
+                        <li>Line plots, scatter plots, bar charts, histograms</li>
+                        <li>Pie charts, stem plots, contour plots</li>
+                        <li>Customizable labels, titles, and legends</li>
+                        <li>Multiple subplots in one figure</li>
+                        <li>Save figures in various formats (PNG, PDF, SVG, etc.)</li>
+                    </ul>
+                    
+                    <h4>Matplotlib Code Examples:</h4>
+                    <div class="code-block">
+                        <span class="code-comment"># Importing matplotlib</span><br>
+                        import matplotlib.pyplot as plt<br>
+                        import numpy as np<br><br>
+                        
+                        <span class="code-comment"># Simple line plot</span><br>
+                        x = np.linspace(0, 10, 100)<br>
+                        y = np.sin(x)<br>
+                        plt.plot(x, y)<br>
+                        plt.title('Sine Wave')<br>
+                        plt.xlabel('x')<br>
+                        plt.ylabel('sin(x)')<br>
+                        plt.show()<br><br>
+                        
+                        <span class="code-comment"># Scatter plot</span><br>
+                        x = np.random.randn(100)<br>
+                        y = np.random.randn(100)<br>
+                        plt.scatter(x, y)<br>
+                        plt.title('Scatter Plot')<br>
+                        plt.show()
+                    </div>
+                    
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-chart-line"></i> Line Plots</h4>
+                            <p>Create detailed line plots with customization options.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-braille"></i> Scatter Plots</h4>
+                            <p>Visualize relationships between variables with scatter plots.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-chart-bar"></i> Bar Charts</h4>
+                            <p>Compare categorical data with various bar chart styles.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day4" class="doc-section">
+            <h2>Day 4: Seaborn Library</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">4</div>
+                    <h3 class="day-title">Statistical Data Visualization with Seaborn</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the fourth day, we explored Seaborn, a Python data visualization library based on Matplotlib that provides a high-level interface for drawing attractive statistical graphics.</p>
+                    
+                    <h4>Seaborn Key Features:</h4>
+                    <ul>
+                        <li>Built-in themes for styling Matplotlib graphics</li>
+                        <li>Visualization of univariate and bivariate distributions</li>
+                        <li>Plotting statistical time series data</li>
+                        <li>Tools for fitting and visualizing linear regression models</li>
+                        <li>Functions for visualizing matrices and using color palettes</li>
+                    </ul>
+                    
+                    <h4>Seaborn Code Examples:</h4>
+                    <div class="code-block">
+                        <span class="code-comment"># Importing seaborn</span><br>
+                        import seaborn as sns<br>
+                        import matplotlib.pyplot as plt<br><br>
+                        
+                        <span class="code-comment"># Load example dataset</span><br>
+                        tips = sns.load_dataset("tips")<br><br>
+                        
+                        <span class="code-comment"># Create a violin plot</span><br>
+                        sns.violinplot(x="day", y="total_bill", data=tips)<br>
+                        plt.show()<br><br>
+                        
+                        <span class="code-comment"># Create a heatmap</span><br>
+                        import numpy as np<br>
+                        uniform_data = np.random.rand(10, 12)<br>
+                        ax = sns.heatmap(uniform_data)<br>
+                        plt.show()<br><br>
+                        
+                        <span class="code-comment"># Pair plot for multivariate analysis</span><br>
+                        iris = sns.load_dataset("iris")<br>
+                        sns.pairplot(iris, hue="species")<br>
+                        plt.show()
+                    </div>
+                    
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-violin"></i> Statistical Plots</h4>
+                            <p>Specialized plots for statistical analysis like violin plots.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-fire"></i> Heatmaps</h4>
+                            <p>Visualize matrix-like data with color-coded heatmaps.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-th-large"></i> Pair Plots</h4>
+                            <p>Explore relationships between multiple variables simultaneously.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="practice" class="doc-section">
+            <h2>Practice & Assignments</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number"><i class="fas fa-laptop-code"></i></div>
+                    <h3 class="day-title">Hands-on Exercises</h3>
+                </div>
+                <div class="day-content">
+                    <p>After learning the essential libraries, we practiced with various exercises and assignments to solidify our understanding.</p>
+                    
+                    <h4>Practice Exercises:</h4>
+                    
+                    <div class="assignment">
+                        <h4><i class="fas fa-tasks"></i> Exercise 1: NumPy Array Operations</h4>
+                        <p>Create a 5x5 array with random values and find the minimum and maximum values. Then normalize the array so all values fall between 0 and 1.</p>
+                    </div>
+                    
+                    <div class="assignment">
+                        <h4><i class="fas fa-tasks"></i> Exercise 2: Matplotlib Visualization</h4>
+                        <p>Create a line plot of the sine and cosine functions from 0 to 2π. Add a legend, title, and customize the line styles and colors.</p>
+                    </div>
+                    
+                    <div class="assignment">
+                        <h4><i class="fas fa-tasks"></i> Exercise 3: Seaborn Statistical Plot</h4>
+                        <p>Load the built-in "tips" dataset in Seaborn and create a visualization that shows the relationship between total bill and tip amount, differentiated by time of day (lunch vs dinner).</p>
+                    </div>
+                    
+                    <div class="assignment">
+                        <h4><i class="fas fa-tasks"></i> Exercise 4: Comprehensive Project</h4>
+                        <p>Create a Jupyter notebook that demonstrates data loading, cleaning with Pandas, analysis with NumPy, and visualization with both Matplotlib and Seaborn using a real-world dataset of your choice.</p>
+                    </div>
+                    
+                    <h4>Learning Outcomes:</h4>
+                    <ul>
+                        <li>Ability to manipulate numerical data efficiently with NumPy</li>
+                        <li>Skills to create various types of plots with Matplotlib</li>
+                        <li>Understanding of statistical visualization with Seaborn</li>
+                        <li>Experience with real-world data analysis workflows</li>
+                        <li>Preparation for more advanced machine learning concepts</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="resources" class="doc-section">
+            <h2>Additional Resources</h2>
+            <div class="doc-content">
+                <h3><i class="fas fa-book-open"></i> Further Learning</h3>
+                <p>Expand your AI/ML knowledge with these recommended resources.</p>
+                
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <h4><i class="fas fa-book"></i> Recommended Books</h4>
+                        <p>• "Python for Data Analysis" by Wes McKinney<br>• "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow" by Aurélien Géron<br>• "Python Data Science Handbook" by Jake VanderPlas</p>
+                    </div>
+                    <div class="topic-card">
+                        <h4><i class="fas fa-globe"></i> Online Resources</h4>
+                        <p>• NumPy Official Documentation<br>• Matplotlib Gallery<br>• Seaborn Tutorials<br>• Kaggle Learn Courses</p>
+                    </div>
+                    <div class="topic-card">
+                        <h4><i class="fas fa-laptop-code"></i> Practice Platforms</h4>
+                        <p>• Kaggle Notebooks<br>• Google Colab<br>• Jupyter Notebook<br>• DataCamp Exercises</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="back-container">
+            <a href="home.html#fablab" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to FABLAB Modules
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or respect OS preference
+        if (localStorage.getItem('theme') === 'dark' || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Mobile Menu Functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            
+            if (sidebar.classList.contains('active')) {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // Update active link
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                link.classList.add('active');
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Highlight active section in sidebar
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.doc-section');
+            const navLinks = document.querySelectorAll('.sidebar-menu a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 150) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CAD Module Documentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #D96C80;
+      --secondary: #BF2A52;
+      --accent: #BFB74B;
+      --accent2: #F2AE2E;
+      --accent3: #F2E9CE;
+      --dark: #2D2B55;
+      --darker: #1E1E2E;
+      --light: #F8F9FC;
+      --text: #333333;
+      --text-light: #F8F9FC;
+      --bg: #ffffff;
+      --card-bg: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .dark-mode {
+      --primary: #D96C80;
+      --secondary: #BF2A52;
+      --accent: #BFB74B;
+      --accent2: #F2AE2E;
+      --accent3: #F2E9CE;
+      --dark: #F8F9FC;
+      --darker: #121212;
+      --light: #1E1E2E;
+      --text: #F8F9FC;
+      --text-light: #F8F9FC;
+      --bg: #1E1E2E;
+      --card-bg: #2D2B55;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+    
+    .subtitle {
+      color: var(--text);
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.8;
+    }
+    
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: none;
+      color: var(--text);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 5px 15px var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      z-index: 100;
+      transition: var(--transition);
+    }
+    
+    .theme-toggle:hover {
+      transform: rotate(30deg);
+      color: var(--primary);
+    }
+    
+    .days-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .day {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .day:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px var(--shadow);
+    }
+    
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .side-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .day:hover .side-image {
+      transform: scale(1.05);
+    }
+    
+    .text {
+      flex: 1;
+      min-width: 300px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .day h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .day h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    .day p {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .topic {
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    
+    .tools {
+      margin-top: 1rem;
+    }
+    
+    .tools h4 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+    
+    .tools-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .tool {
+      background: rgba(217, 108, 128, 0.1);
+      color: var(--primary);
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      margin: 3rem auto;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 10px 20px rgba(217, 108, 128, 0.3);
+    }
+    
+    .back-link i {
+      margin-right: 10px;
+      transition: var(--transition);
+    }
+    
+    .back-link:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(217, 108, 128, 0.4);
+    }
+    
+    .back-link:hover i {
+      transform: translateX(-5px);
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .day {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        min-height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <div class="container">
+    <header>
+      <h1>CAD Module - 6 Days Documentation</h1>
+       <div class="mentor-info">
+                    <strong><h3>Mentor:</h3></strong><h3> Swayam Dhamode</h3>
+                </div>
+      <p class="subtitle">A comprehensive journey through Computer-Aided Design with Fusion 360</p>
+    </header>
+    
+    <div class="days-container">
+      <div class="day">
+        <div class="image-container">
+          <img src="cylinder.png" alt="Day 1 - Basic Modeling" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 1: Introduction and Basic Modelling</h3>
+          <p>As a learner on Day 1 of the CAD module, I began by installing and setting up Fusion 360, downloading it from the official Autodesk website and registering with an educational license to unlock all its features.</p>
+          <div class="topics">
+            <span class="topic">Software Setup</span>
+            <span class="topic">UI Navigation</span>
+            <span class="topic">Basic Tools</span>
+          </div>
+          <p>Once the software was ready, I explored the user interface, getting familiar with key components like the Data Panel, Toolbar, Browser, Canvas, Navigation Bar, and ViewCube. For the hands-on practical, I created a solid cylinder by sketching a circle and extruding it, then transformed it into a pipe by cutting out an inner concentric circle.</p>
+          <div class="tools">
+            <h4>Tools Learned:</h4>
+            <div class="tools-list">
+              <span class="tool">Sketch</span>
+              <span class="tool">Extrude</span>
+              <span class="tool">Shell</span>
+              <span class="tool">Fillet</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="spiner.png" alt="Day 2 - Sketching" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 2: Sketching and Basic Features</h3>
+          <p>On Day 2, I focused on the basics of 2D sketching, which forms the foundation for all 3D models. I explored essential sketch commands including Line, Circle, and Rectangle, learning how to accurately construct shapes and define geometry.</p>
+          <div class="topics">
+            <span class="topic">2D Sketching</span>
+            <span class="topic">Dimensions</span>
+            <span class="topic">Patterns</span>
+            <span class="topic">Engineering Drawings</span>
+          </div>
+          <p>I practiced applying Sketch Dimensions to control sizes precisely and used Circular and Rectangular Pattern tools to efficiently replicate features. I was introduced to the Engineering Drawing environment where I learned how to generate technical drawings from 3D models.</p>
+          <div class="tools">
+            <h4>Tools Learned:</h4>
+            <div class="tools-list">
+              <span class="tool">Line/Circle/Rectangle</span>
+              <span class="tool">Dimensions</span>
+              <span class="tool">Patterns</span>
+              <span class="tool">Extrude/Revolve</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="pikachu.png" alt="Day 3 - Intermediate Modelling" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 3: Intermediate Modelling and Referencing</h3>
+          <p>On Day 3, I learned how to use reference images effectively by importing them into Fusion 360 using the Canvas feature, which allowed me to visually trace and model over a real-world object.</p>
+          <div class="topics">
+            <span class="topic">Reference Images</span>
+            <span class="topic">Canvas</span>
+            <span class="topic">Constraints</span>
+            <span class="topic">Components</span>
+          </div>
+          <p>This skill was put into practice through a fun project: designing a Pikachu-themed kitchen tool. I also modeled a piston and connecting rod assembly, using constraints like Equal, Vertical/Horizontal to maintain consistent geometry. I learned about Component Structuring and how to edit features using the Timeline.</p>
+          <div class="tools">
+            <h4>Tools Learned:</h4>
+            <div class="tools-list">
+              <span class="tool">Canvas</span>
+              <span class="tool">Constraints</span>
+              <span class="tool">Revolve</span>
+              <span class="tool">Hole</span>
+              <span class="tool">Appearance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="piston.png" alt="Day 4 - Advanced Modelling" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 4: Advanced Modelling and Assembly</h3>
+          <p>On Day 4, I learned how to upload and manage projects on Fusion 360's cloud platform. The day's practical focused on designing an electric vehicle (EV) motor casing, which introduced me to a range of advanced modeling commands.</p>
+          <div class="topics">
+            <span class="topic">Cloud Management</span>
+            <span class="topic">Advanced Features</span>
+            <span class="topic">Bodies vs Components</span>
+            <span class="topic">Assembly Techniques</span>
+          </div>
+          <p>I used Shell to hollow out solid bodies, Offset in Extrude to control thickness, and combined operations like Join and Cut. I applied Fillet to round edges, added realistic Threads, and explored the difference between bodies and components for assembly workflows.</p>
+          <div class="tools">
+            <h4>Tools Learned:</h4>
+            <div class="tools-list">
+              <span class="tool">Shell</span>
+              <span class="tool">Offset</span>
+              <span class="tool">Join/Cut</span>
+              <span class="tool">Fillet</span>
+              <span class="tool">Thread</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="watch.png" alt="Day 5 - Revision Practice" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 5: Revision Practice and Extra Tools</h3>
+          <p>On Day 5, I began with a recap of essential sketch and solid modeling commands. The practical tasks were both creative and technical: modeling a plastic bottle, creating hexagonal and triangular pipes, and experimenting with engraving text onto solid bodies.</p>
+          <div class="topics">
+            <span class="topic">Command Recap</span>
+            <span class="topic">Construction Planes</span>
+            <span class="topic">McMaster-Carr Library</span>
+            <span class="topic">Rendering & Simulation</span>
+          </div>
+          <p>I explored construction planes for non-standard orientations and learned advanced features like Loft, Torus, Sphere, and Coil. I imported standard parts from the McMaster-Carr library and customized my workspace settings. The day concluded with an introduction to Rendering and Simulation environments.</p>
+          <div class="tools">
+            <h4>Tools Learned:</h4>
+            <div class="tools-list">
+              <span class="tool">Loft</span>
+              <span class="tool">Coil</span>
+              <span class="tool">Construction Planes</span>
+              <span class="tool">Text Engraving</span>
+              <span class="tool">Appearance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="project.jpg" alt="Day 6 - Review Session" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 6: Review and Feedback Session</h3>
+          <p>On Day 6, I had the opportunity to revisit and clarify doubts from previous sessions. Challenges in modifying features, applying constraints, aligning components, and managing appearances were addressed through detailed explanations.</p>
+          <div class="topics">
+            <span class="topic">Q&A Session</span>
+            <span class="topic">Troubleshooting</span>
+            <span class="topic">Feedback Collection</span>
+            <span class="topic">Future Learning</span>
+          </div>
+          <p>We had an open Q&A round where I could ask specific questions about tools I struggled with. Instructors collected feedback and suggestions, and we discussed future learning opportunities in CAD, including simulation, generative design, and complex technical drawings.</p>
+          <div class="tools">
+            <h4>Session Focus:</h4>
+            <div class="tools-list">
+              <span class="tool">Problem Solving</span>
+              <span class="tool">Best Practices</span>
+              <span class="tool">Workflow Optimization</span>
+              <span class="tool">Future Pathways</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align: center;">
+      <a href="home.html#fablab" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to FABLAB Modules
+      </a>
+    </div>
+  </div>
+
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script>
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('i');
+    
+    // Check for saved theme preference or respect OS preference
+    if (localStorage.getItem('theme') === 'dark' || 
+        (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+      document.body.classList.add('dark-mode');
+      themeIcon.classList.remove('fa-moon');
+      themeIcon.classList.add('fa-sun');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      
+      if (document.body.classList.contains('dark-mode')) {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
+</body>
+</html>

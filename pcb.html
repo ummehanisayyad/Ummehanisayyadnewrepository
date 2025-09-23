@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IoT & PCB Design Module Documentation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #D96C80;
+      --secondary: #BF2A52;
+      --accent: #BFB74B;
+      --accent2: #F2AE2E;
+      --accent3: #F2E9CE;
+      --dark: #2D2B55;
+      --darker: #1E1E2E;
+      --light: #F8F9FC;
+      --text: #333333;
+      --text-light: #F8F9FC;
+      --bg: #ffffff;
+      --card-bg: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+      --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .dark-mode {
+      --primary: #D96C80;
+      --secondary: #BF2A52;
+      --accent: #BFB74B;
+      --accent2: #F2AE2E;
+      --accent3: #F2E9CE;
+      --dark: #F8F9FC;
+      --darker: #121212;
+      --light: #1E1E2E;
+      --text: #F8F9FC;
+      --text-light: #F8F9FC;
+      --bg: #1E1E2E;
+      --card-bg: #2D2B55;
+      --shadow: rgba(0, 0, 0, 0.3);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease, color 0.5s ease;
+      padding: 2rem;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+    
+    .subtitle {
+      color: var(--text);
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      opacity: 0.8;
+    }
+    
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      border: none;
+      color: var(--text);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 5px 15px var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      z-index: 100;
+      transition: var(--transition);
+    }
+    
+    .theme-toggle:hover {
+      transform: rotate(30deg);
+      color: var(--primary);
+    }
+    
+    .days-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    
+    .day {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px var(--shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-wrap: wrap;
+    }
+    
+    .day:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px var(--shadow);
+    }
+    
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .side-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+    
+    .day:hover .side-image {
+      transform: scale(1.05);
+    }
+    
+    .text {
+      flex: 1;
+      min-width: 300px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .day h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .day h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 2px;
+    }
+    
+    .day p {
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .topic {
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    
+    .tools {
+      margin-top: 1rem;
+    }
+    
+    .tools h4 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+    
+    .tools-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .tool {
+      background: rgba(217, 108, 128, 0.1);
+      color: var(--primary);
+      padding: 5px 15px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      margin: 3rem auto;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: 0 10px 20px rgba(217, 108, 128, 0.3);
+    }
+    
+    .back-link i {
+      margin-right: 10px;
+      transition: var(--transition);
+    }
+    
+    .back-link:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(217, 108, 128, 0.4);
+    }
+    
+    .back-link:hover i {
+      transform: translateX(-5px);
+    }
+    
+    .mentors-section {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-top: 3rem;
+      box-shadow: 0 10px 30px var(--shadow);
+      text-align: center;
+    }
+    
+    .mentors-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .mentors-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    
+    .mentor {
+      background: rgba(217, 108, 128, 0.1);
+      padding: 1.5rem;
+      border-radius: 10px;
+      min-width: 200px;
+    }
+    
+    .mentor h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+    
+    .mentor p {
+      color: var(--text);
+      opacity: 0.8;
+    }
+    
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      .day {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        min-height: 250px;
+      }
+      
+      .mentors-list {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <div class="container">
+    <header>
+      <h1>IoT & PCB Design - 7 Days Documentation</h1>
+      <p class="subtitle">A comprehensive journey through IoT programming with ESP8266 and PCB design fundamentals</p>
+    </header>
+    
+    <div class="days-container">
+      <div class="day">
+        <div class="image-container">
+          <img src="pcb6.png" alt="Day 1 - IoT Module" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 1 – IoT Module</h3>
+          <p>Introduction to ESP8266: Learned about ESP8266 microcontroller, its pinout, specifications, and use in IoT projects.</p>
+          <div class="topics">
+            <span class="topic">ESP8266 Introduction</span>
+            <span class="topic">Arduino IDE Setup</span>
+            <span class="topic">LED Programming</span>
+          </div>
+          <p>Installing Arduino IDE: Step-by-step installation and configuration for programming ESP8266. Setting up Arduino IDE for ESP8266: Added ESP8266 board manager URL and installed required libraries. Mini Program – Blink Internal LED: Wrote and uploaded first program to blink onboard LED. Mini Program – Blink External LED: Connected external LED to ESP8266 and controlled it via GPIO pins.</p>
+          <div class="tools">
+            <h4>Tools & Concepts:</h4>
+            <div class="tools-list">
+              <span class="tool">ESP8266</span>
+              <span class="tool">Arduino IDE</span>
+              <span class="tool">GPIO Control</span>
+              <span class="tool">LED Blink</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="pcb7.png" alt="Day 2 - IoT Module" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 2 – IoT Module</h3>
+          <p>Introduction to Wi-Fi in IoT: Learned how Wi-Fi enables IoT communication and networking basics (IP, SSID, password).</p>
+          <div class="topics">
+            <span class="topic">Wi-Fi Networking</span>
+            <span class="topic">Web Server</span>
+            <span class="topic">Remote Control</span>
+          </div>
+          <p>Wi-Fi Setup in ESP8266: Connected ESP8266 to a Wi-Fi network. Program 1 – Connect ESP8266 to Wi-Fi: Verified connection by printing IP address in Serial Monitor. Program 2 – Simple Web Server: Created a basic web page hosted on ESP8266 to control LED ON/OFF via browser.</p>
+          <div class="tools">
+            <h4>Tools & Concepts:</h4>
+            <div class="tools-list">
+              <span class="tool">Wi-Fi Connection</span>
+              <span class="tool">Web Server</span>
+              <span class="tool">IP Address</span>
+              <span class="tool">Remote Control</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="pcb2.jpg" alt="Day 3 - IoT Module" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 3 – IoT Module</h3>
+          <p>Quick Recap: Reviewed Wi-Fi connection and web server setup from Day 2.</p>
+          <div class="topics">
+            <span class="topic">Ultrasonic Sensor</span>
+            <span class="topic">Distance Measurement</span>
+            <span class="topic">Live Data</span>
+          </div>
+          <p>Ultrasonic Sensor with ESP8266: Program 1 – Distance Measurement: Interfaced ultrasonic sensor, measured distance, and printed results in Serial Monitor. Program 2 – Live Web Page: Displayed live sensor data on a web page for real-time monitoring.</p>
+          <div class="tools">
+            <h4>Tools & Concepts:</h4>
+            <div class="tools-list">
+              <span class="tool">Ultrasonic Sensor</span>
+              <span class="tool">Real-time Data</span>
+              <span class="tool">Web Monitoring</span>
+              <span class="tool">Sensor Integration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="pcb8.png" alt="Day 4 - IoT Module" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 4 – IoT Module</h3>
+          <p>Project Concept Discussion: Chose a mini IoT project based on sensor data and web control.</p>
+          <div class="topics">
+            <span class="topic">MIT App Inventor</span>
+            <span class="topic">Mobile App</span>
+            <span class="topic">Project Integration</span>
+          </div>
+          <p>MIT App Inventor Setup: Installed and explored App Inventor interface. App Design & Programming: Created a simple mobile app to display sensor data and control outputs. Integration: Connected the app with ESP8266 and successfully tested data transfer and control.</p>
+          <div class="tools">
+            <h4>Tools & Concepts:</h4>
+            <div class="tools-list">
+              <span class="tool">MIT App Inventor</span>
+              <span class="tool">Mobile App</span>
+              <span class="tool">Data Integration</span>
+              <span class="tool">Project Development</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="pcb9.jpg" alt="Day 5 - PCB Designing Module" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 5 – PCB Designing Module</h3>
+          <p>AC to DC Converter Schematic: Designed schematic for a basic AC to DC converter circuit.</p>
+          <div class="topics">
+            <span class="topic">PCB Basics</span>
+            <span class="topic">Schematic Design</span>
+            <span class="topic">AC to DC Conversion</span>
+          </div>
+          <p>PCB Basics: Learned about PCB layers, traces, vias, footprints, and design rules. PPT Session: Discussed real-life applications of PCB and best design practices.</p>
+          <div class="tools">
+            <h4>Tools & Concepts:</h4>
+            <div class="tools-list">
+              <span class="tool">Schematic Design</span>
+              <span class="tool">PCB Layers</span>
+              <span class="tool">Design Rules</span>
+              <span class="tool">AC-DC Conversion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="pcb4.jpg" alt="Day 6 - PCB Designing Module" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 6 – PCB Designing Module</h3>
+          <p>AC to DC Converter Layout: Converted schematic to PCB layout using design software.</p>
+          <div class="topics">
+            <span class="topic">PCB Layout</span>
+            <span class="topic">Component Placement</span>
+            <span class="topic">DRC Check</span>
+          </div>
+          <p>Component Placement & Routing: Practiced placement, routing, and checking for DRC (Design Rule Check) errors. Hands-on Session: Students worked on layout tools independently under guidance.</p>
+          <div class="tools">
+            <h4>Tools & Concepts:</h4>
+            <div class="tools-list">
+              <span class="tool">PCB Layout</span>
+              <span class="tool">Component Routing</span>
+              <span class="tool">DRC</span>
+              <span class="tool">Hands-on Practice</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day">
+        <div class="image-container">
+          <img src="pcb3.jpg" alt="Day 7 - PCB Designing Module" class="side-image">
+        </div>
+        <div class="text">
+          <h3>Day 7 – PCB Designing Module</h3>
+          <p>DC Motor Speed Controller Schematic: Designed schematic for DC motor control circuit.</p>
+          <div class="topics">
+            <span class="topic">Motor Controller</span>
+            <span class="topic">Layout Design</span>
+            <span class="topic">Q&A Session</span>
+          </div>
+          <p>Layout Designing: Converted schematic to layout and routed connections. Discussion & Q&A: Cleared doubts related to layout design, simulation, and real-world implementation.</p>
+          <div class="tools">
+            <h4>Tools & Concepts:</h4>
+            <div class="tools-list">
+              <span class="tool">Motor Control</span>
+              <span class="tool">Layout Routing</span>
+              <span class="tool">Simulation</span>
+              <span class="tool">Implementation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mentors-section">
+      <h2>Mentors</h2>
+      <div class="mentors-list">
+        <div class="mentor">
+          <h3>Rakesh Lande (RL)</h3>
+          <p>IoT & PCB Design Expert</p>
+        </div>
+        <div class="mentor">
+          <h3>Rohan Khandar (RK)</h3>
+          <p>PCB Design Specialist</p>
+        </div>
+        <div class="mentor">
+          <h3>Tejas Tarankar (TT)</h3>
+          <p>IoT Programming Mentor</p>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align: center;">
+      <a href="home.html#fablab" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to FABLAB Modules
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle Functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('i');
+    
+    // Check for saved theme preference or respect OS preference
+    if (localStorage.getItem('theme') === 'dark' || 
+        (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+      document.body.classList.add('dark-mode');
+      themeIcon.classList.remove('fa-moon');
+      themeIcon.classList.add('fa-sun');
+    }
+    
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      
+      if (document.body.classList.contains('dark-mode')) {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  </script>
+</body>
+</html>

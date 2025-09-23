@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Programming Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D96C80;
+            --secondary: #BF2A52;
+            --accent: #BFB74B;
+            --accent2: #F2AE2E;
+            --accent3: #F2E9CE;
+            --dark: #2D2B55;
+            --darker: #1E1E2E;
+            --light: #F8F9FC;
+            --text: #333333;
+            --text-light: #F8F9FC;
+            --bg: #ffffff;
+            --card-bg: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --sidebar-width: 280px;
+            --header-height: 80px;
+        }
+
+        .dark-mode {
+            --primary: #D96C80;
+            --secondary: #BF2A52;
+            --accent: #BFB74B;
+            --accent2: #F2AE2E;
+            --accent3: #F2E9CE;
+            --dark: #F8F9FC;
+            --darker: #121212;
+            --light: #1E1E2E;
+            --text: #F8F9FC;
+            --text-light: #F8F9FC;
+            --bg: #1E1E2E;
+            --card-bg: #2D2B55;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--card-bg);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 30px 0;
+            overflow-y: auto;
+            box-shadow: 5px 0 15px var(--shadow);
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            padding: 0 25px 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar-header h2 i {
+            margin-right: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu a {
+            display: block;
+            padding: 12px 25px;
+            color: var(--text);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .sidebar-menu a:hover {
+            background: rgba(217, 108, 128, 0.1);
+            color: var(--primary);
+        }
+        
+        .sidebar-menu a.active {
+            background: linear-gradient(45deg, rgba(217, 108, 128, 0.15), rgba(191, 183, 75, 0.15));
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .sidebar-menu a.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .sidebar-submenu {
+            list-style: none;
+            padding-left: 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .sidebar-submenu.show {
+            max-height: 500px;
+        }
+        
+        .sidebar-submenu a {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+        
+        .sidebar-submenu a:hover {
+            opacity: 1;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px;
+            position: relative;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .content-header h1 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .content-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(30deg);
+        }
+        
+        /* Documentation Content */
+        .doc-section {
+            margin-bottom: 60px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .doc-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(217, 108, 128, 0.2);
+        }
+        
+        .doc-content {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            margin-bottom: 30px;
+        }
+        
+        .doc-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .doc-content h3 i {
+            margin-right: 10px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .doc-content p {
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .topic-card {
+            background: linear-gradient(135deg, var(--light) 0%, var(--card-bg) 100%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: var(--transition);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+        
+        .topic-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .topic-card h4 i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .topic-card p {
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+        
+        .code-block {
+            background: var(--darker);
+            color: var(--text-light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+        
+        .code-comment {
+            color: #6A9955;
+        }
+        
+        .code-tag {
+            color: #569CD6;
+        }
+        
+        .code-attr {
+            color: #9CDCFE;
+        }
+        
+        .code-value {
+            color: #CE9178;
+        }
+        
+        .command {
+            color: #4EC9B0;
+        }
+        
+        .back-container {
+            text-align: center;
+            margin: 50px 0 30px;
+        }
+        
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(217, 108, 128, 0.3);
+        }
+        
+        .back-link i {
+            margin-right: 10px;
+            transition: var(--transition);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(217, 108, 128, 0.4);
+        }
+        
+        .back-link:hover i {
+            transform: translateX(-5px);
+        }
+        
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        
+        /* Day cards */
+        .day-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px var(--shadow);
+            border-left: 5px solid var(--accent2);
+        }
+        
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .day-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 15px;
+            min-width: 50px;
+            height: 50px;
+            background: rgba(217, 108, 128, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .day-title {
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .day-content {
+            padding-left: 65px;
+        }
+        
+        /* Table styling */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .comparison-table th {
+            background-color: rgba(217, 108, 128, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Flowchart styling */
+        .flowchart {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .flow-step {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .flow-arrow {
+            text-align: center;
+            margin: 10px 0;
+            color: var(--primary);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            :root {
+                --sidebar-width: 240px;
+            }
+            
+            .main-content {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 70px 20px 30px;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+            }
+            
+            .content-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .day-content {
+                padding-left: 0;
+                margin-top: 15px;
+            }
+            
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .doc-content {
+                padding: 20px;
+            }
+            
+            .doc-section h2 {
+                font-size: 1.5rem;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .theme-toggle {
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Button -->
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2><i class="fab fa-java"></i> Java Docs</h2>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li><a href="#day1" class="active"><i class="fas fa-star"></i> Day 1: Java & OOP Basics</a></li>
+            <li><a href="#day2"><i class="fas fa-cogs"></i> Day 2: JVM, JRE, JDK</a></li>
+            <li><a href="#day3"><i class="fas fa-code"></i> Day 3: Java Features & Structure</a></li>
+            <li><a href="#day4"><i class="fas fa-cube"></i> Day 4: Variables & Data Types</a></li>
+            <li><a href="#day5"><i class="fas fa-calculator"></i> Day 5: Expressions & Operators</a></li>
+            <li><a href="#day6"><i class="fas fa-exchange-alt"></i> Day 6: Conversion & Flow Control</a></li>
+            <li><a href="#resources"><i class="fas fa-book"></i> Resources</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1>Java Programming Module</h1>
+             <div class="mentor-info">
+                    <strong><h3>Mentor:</h3></strong><h3> Atharv Pathak</h3>
+                </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <section id="day1" class="doc-section">
+            <h2>Day 1: Java Introduction & OOP Basics</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">1</div>
+                    <h3 class="day-title">Java and Object-Oriented Programming</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the first day, we learned the basics of Java programming and the fundamentals of Object-Oriented Programming (OOP).</p>
+                    
+                    <h4>Introduction to Java:</h4>
+                    <ul>
+                        <li>Java is a high-level, class-based, object-oriented programming language</li>
+                        <li>Designed to have as few implementation dependencies as possible</li>
+                        <li>Write once, run anywhere (WORA) capability</li>
+                        <li>Java applications are typically compiled to bytecode that can run on any JVM</li>
+                    </ul>
+                    
+                    <h4>Need for OOP:</h4>
+                    <ul>
+                        <li>Modularity: The source code for an object can be written and maintained independently</li>
+                        <li>Code reusability: Objects can be reused across programs</li>
+                        <li>Pluggability and debugging ease: If a particular object turns out to be problematic, it can simply be replaced</li>
+                        <li>Improved software maintainability: Objects can be maintained separately</li>
+                    </ul>
+                    
+                    <h4>Procedural vs Object-Oriented Programming:</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Procedural Programming</th>
+                                <th>Object-Oriented Programming</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Program is divided into small parts called functions</td>
+                                <td>Program is divided into parts called objects</td>
+                            </tr>
+                            <tr>
+                                <td>Follows top-down approach</td>
+                                <td>Follows bottom-up approach</td>
+                            </tr>
+                            <tr>
+                                <td>No access specifier</td>
+                                <td>Has access specifiers like public, private, protected</td>
+                            </tr>
+                            <tr>
+                                <td>Adding new data and functions is not easy</td>
+                                <td>Adding new data and functions is easy</td>
+                            </tr>
+                            <tr>
+                                <td>Less code reusability</td>
+                                <td>More code reusability</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day2" class="doc-section">
+            <h2>Day 2: Java Principles & Platform</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">2</div>
+                    <h3 class="day-title">JVM, JRE, JDK and Basic Programming</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the second day, we learned about the Java platform components and wrote our first Java program.</p>
+                    
+                    <h4>Java Platform Components:</h4>
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-cube"></i> JVM (Java Virtual Machine)</h4>
+                            <p>An abstract machine that provides the runtime environment for Java bytecode execution.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-box"></i> JRE (Java Runtime Environment)</h4>
+                            <p>Implementation of JVM which provides the libraries and other components to run applications.</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-wrench"></i> JDK (Java Development Kit)</h4>
+                            <p>Includes JRE plus development tools like compiler, debugger, and documentation tools.</p>
+                        </div>
+                    </div>
+                    
+                    <h4>Applications of Java:</h4>
+                    <ul>
+                        <li>Desktop GUI applications</li>
+                        <li>Web applications and servers</li>
+                        <li>Mobile applications (Android)</li>
+                        <li>Enterprise applications</li>
+                        <li>Scientific applications</li>
+                        <li>Embedded systems</li>
+                        <li>Big data technologies</li>
+                    </ul>
+                    
+                    <h4>First Java Program:</h4>
+                    <div class="code-block">
+                        <span class="code-comment">// Simple Hello World program in Java</span><br>
+                        <span class="code-tag">public class</span> <span class="code-attr">HelloWorld</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public static void</span> <span class="code-attr">main</span>(String[] args) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-value">"Hello, World!"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day3" class="doc-section">
+            <h2>Day 3: Java Features & Program Structure</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">3</div>
+                    <h3 class="day-title">Java Characteristics and Basic Syntax</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the third day, we explored Java's key features and learned about program structure.</p>
+                    
+                    <h4>Java Features:</h4>
+                    <ul>
+                        <li><strong>Simple</strong>: Easy to learn and understand</li>
+                        <li><strong>Object-Oriented</strong>: Follows OOP paradigm</li>
+                        <li><strong>Platform Independent</strong>: Write once, run anywhere</li>
+                        <li><strong>Secure</strong>: Provides security features</li>
+                        <li><strong>Robust</strong>: Strong memory management and exception handling</li>
+                        <li><strong>Multithreaded</strong>: Supports concurrent programming</li>
+                        <li><strong>High Performance</strong>: Just-In-Time compiler enables high performance</li>
+                        <li><strong>Distributed</strong>: Designed for distributed environment</li>
+                    </ul>
+                    
+                    <h4>Java Program Structure:</h4>
+                    <div class="code-block">
+                        <span class="code-comment">// Package declaration (optional)</span><br>
+                        <span class="code-tag">package</span> com.example.mypackage;<br><br>
+                        
+                        <span class="code-comment">// Import statements (optional)</span><br>
+                        <span class="code-tag">import</span> java.util.Scanner;<br><br>
+                        
+                        <span class="code-comment">// Class declaration (required)</span><br>
+                        <span class="code-tag">public class</span> <span class="code-attr">MyClass</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Main method - entry point of application</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public static void</span> <span class="code-attr">main</span>(String[] args) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Your code here</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-value">"Program structure example"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Other methods (optional)</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public void</span> <span class="code-attr">myMethod</span>() {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Method implementation</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day4" class="doc-section">
+            <h2>Day 4: Variables, Data Types & Operators</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">4</div>
+                    <h3 class="day-title">Java Fundamentals</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the fourth day, we learned about variables, primitive data types, identifiers, literals, and operators.</p>
+                    
+                    <h4>Primitive Data Types:</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Data Type</th>
+                                <th>Size</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>byte</td>
+                                <td>1 byte</td>
+                                <td>8-bit signed integer</td>
+                                <td>byte b = 100;</td>
+                            </tr>
+                            <tr>
+                                <td>short</td>
+                                <td>2 bytes</td>
+                                <td>16-bit signed integer</td>
+                                <td>short s = 10000;</td>
+                            </tr>
+                            <tr>
+                                <td>int</td>
+                                <td>4 bytes</td>
+                                <td>32-bit signed integer</td>
+                                <td>int i = 100000;</td>
+                            </tr>
+                            <tr>
+                                <td>long</td>
+                                <td>8 bytes</td>
+                                <td>64-bit signed integer</td>
+                                <td>long l = 100000L;</td>
+                            </tr>
+                            <tr>
+                                <td>float</td>
+                                <td>4 bytes</td>
+                                <td>Single-precision floating point</td>
+                                <td>float f = 234.5f;</td>
+                            </tr>
+                            <tr>
+                                <td>double</td>
+                                <td>8 bytes</td>
+                                <td>Double-precision floating point</td>
+                                <td>double d = 123.4;</td>
+                            </tr>
+                            <tr>
+                                <td>boolean</td>
+                                <td>1 bit</td>
+                                <td>True or false values</td>
+                                <td>boolean flag = true;</td>
+                            </tr>
+                            <tr>
+                                <td>char</td>
+                                <td>2 bytes</td>
+                                <td>Single Unicode character</td>
+                                <td>char letter = 'A';</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h4>Java Operators:</h4>
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-plus"></i> Arithmetic</h4>
+                            <p>+, -, *, /, %, ++, --</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-equals"></i> Assignment</h4>
+                            <p>=, +=, -=, *=, /=, %=</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-not-equal"></i> Comparison</h4>
+                            <p>==, !=, >, <, >=, <=</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-code-branch"></i> Logical</h4>
+                            <p>&&, ||, !</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day5" class="doc-section">
+            <h2>Day 5: Expressions, Precedence & Associativity</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">5</div>
+                    <h3 class="day-title">Operator Precedence and Expression Evaluation</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the fifth day, we learned about expressions, precedence rules, and associativity in Java.</p>
+                    
+                    <h4>Expressions in Java:</h4>
+                    <p>An expression is a combination of variables, operators, and method invocations that evaluates to a single value.</p>
+                    
+                    <div class="code-block">
+                        <span class="code-comment">// Examples of expressions</span><br>
+                        <span class="code-tag">int</span> result = 10 + 5 * 2; <span class="code-comment">// Expression with operators</span><br>
+                        <span class="code-tag">boolean</span> isEqual = (a == b); <span class="code-comment">// Comparison expression</span><br>
+                        <span class="code-tag">String</span> message = <span class="code-value">"Hello, "</span> + name; <span class="code-comment">// String concatenation expression</span>
+                    </div>
+                    
+                    <h4>Operator Precedence Rules:</h4>
+                    <p>Java operators are evaluated in a specific order when they appear in complex expressions:</p>
+                    <ol>
+                        <li>Postfix: expr++, expr--</li>
+                        <li>Unary: ++expr, --expr, +expr, -expr, ~, !</li>
+                        <li>Multiplicative: *, /, %</li>
+                        <li>Additive: +, -</li>
+                        <li>Shift: <<, >>, >>></li>
+                        <li>Relational: <, >, <=, >=, instanceof</li>
+                        <li>Equality: ==, !=</li>
+                        <li>Bitwise AND: &</li>
+                        <li>Bitwise XOR: ^</li>
+                        <li>Bitwise OR: |</li>
+                        <li>Logical AND: &&</li>
+                        <li>Logical OR: ||</li>
+                        <li>Ternary: ? :</li>
+                        <li>Assignment: =, +=, -=, *=, /=, %=, etc.</li>
+                    </ol>
+                    
+                    <h4>Associativity:</h4>
+                    <p>When operators have the same precedence, associativity determines the order of evaluation:</p>
+                    <ul>
+                        <li>Most operators are left-associative: a + b + c is evaluated as (a + b) + c</li>
+                        <li>Assignment operators are right-associative: a = b = c is evaluated as a = (b = c)</li>
+                        <li>Ternary operator is right-associative</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day6" class="doc-section">
+            <h2>Day 6: Primitive Conversion, Casting & Flow Control</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">6</div>
+                    <h3 class="day-title">Type Conversion and Control Structures</h3>
+                </div>
+                <div class="day-content">
+                    <p>On the sixth day, we learned about primitive conversion, casting, and flowchart concepts for flow control.</p>
+                    
+                    <h4>Primitive Conversion and Casting:</h4>
+                    <p>Java supports two types of casting:</p>
+                    
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-arrow-up"></i> Widening Casting</h4>
+                            <p>Automatically done when converting a smaller type to a larger type (byte → short → int → long → float → double)</p>
+                            <div class="code-block" style="margin: 10px 0; font-size: 0.8rem;">
+                                <span class="code-tag">int</span> myInt = 9;<br>
+                                <span class="code-tag">double</span> myDouble = myInt; <span class="code-comment">// Automatic casting</span>
+                            </div>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-arrow-down"></i> Narrowing Casting</h4>
+                            <p>Must be done manually when converting a larger type to a smaller size (double → float → long → int → short → byte)</p>
+                            <div class="code-block" style="margin: 10px 0; font-size: 0.8rem;">
+                                <span class="code-tag">double</span> myDouble = 9.78;<br>
+                                <span class="code-tag">int</span> myInt = (<span class="code-tag">int</span>) myDouble; <span class="code-comment">// Manual casting</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>Flow Control Structures:</h4>
+                    <p>Java provides several flow control structures:</p>
+                    
+                    <div class="flowchart">
+                        <div class="flow-step">
+                            <strong>Conditional Statements:</strong> if, if-else, switch
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>Looping Statements:</strong> for, while, do-while
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <strong>Branching Statements:</strong> break, continue, return
+                        </div>
+                    </div>
+                    
+                    <h4>Example of Flow Control:</h4>
+                    <div class="code-block">
+                        <span class="code-comment">// Example demonstrating various flow control structures</span><br>
+                        <span class="code-tag">public class</span> <span class="code-attr">FlowControlExample</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public static void</span> <span class="code-attr">main</span>(String[] args) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// If-else statement</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">int</span> number = 10;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">if</span> (number > 0) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-value">"Positive number"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="code-tag">else</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-value">"Non-positive number"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// For loop</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">for</span> (<span class="code-tag">int</span> i = 0; i < 5; i++) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-value">"Iteration: "</span> + i);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="resources" class="doc-section">
+            <h2>Additional Resources</h2>
+            <div class="doc-content">
+                <h3><i class="fas fa-book-open"></i> Further Learning</h3>
+                <p>Expand your Java knowledge with these recommended resources.</p>
+                
+                <div class="topics-grid">
+                    <div class="topic-card">
+                        <h4><i class="fas fa-book"></i> Recommended Books</h4>
+                        <p>• "Head First Java" by Kathy Sierra & Bert Bates<br>• "Effective Java" by Joshua Bloch<br>• "Java: The Complete Reference" by Herbert Schildt</p>
+                    </div>
+                    <div class="topic-card">
+                        <h4><i class="fas fa-globe"></i> Online Resources</h4>
+                        <p>• Oracle Java Tutorials<br>• W3Schools Java Tutorial<br>• GeeksforGeeks Java Programming<br>• Java Code Geeks</p>
+                    </div>
+                    <div class="topic-card">
+                        <h4><i class="fas fa-laptop-code"></i> Practice Platforms</h4>
+                        <p>• HackerRank Java Challenges<br>• LeetCode Java Problems<br>• Codecademy Java Course<br>• CodingBat Java Exercises</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="back-container">
+            <a href="home.html#fablab" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back to FABLAB Modules
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or respect OS preference
+        if (localStorage.getItem('theme') === 'dark' || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Mobile Menu Functionality
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            
+            if (sidebar.classList.contains('active')) {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-times"></i>';
+            } else {
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            }
+        });
+        
+                // Close menu when clicking on a link
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // Update active link
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                link.classList.add('active');
+            });
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Highlight active section in sidebar
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.doc-section');
+            const navLinks = document.querySelectorAll('.sidebar-menu a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 150) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
