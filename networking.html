@@ -415,6 +415,72 @@
             padding-left: 65px;
         }
         
+        /* OSI Model Diagram */
+        .osi-diagram {
+            display: flex;
+            flex-direction: column;
+            margin: 30px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+        
+        .osi-layer {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--card-bg);
+            border-left: 5px solid var(--primary);
+            transition: var(--transition);
+        }
+        
+        .osi-layer:hover {
+            transform: translateX(5px);
+            background: rgba(217, 108, 128, 0.05);
+        }
+        
+        .layer-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 40px;
+        }
+        
+        .layer-info {
+            flex: 1;
+        }
+        
+        .layer-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .layer-desc {
+            font-size: 0.9rem;
+            color: var(--text);
+            opacity: 0.8;
+        }
+        
+        .layer-protocols {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        /* Mentor info */
+        .mentor-info {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .mentor-info h3 {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -473,6 +539,15 @@
                 padding-left: 0;
                 margin-top: 15px;
             }
+            
+            .osi-layer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .layer-number {
+                margin-bottom: 10px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -508,12 +583,13 @@
         </div>
         
         <ul class="sidebar-menu">
-            <li><a href="#day1" class="active"><i class="fas fa-layer-group"></i> Day 1: OSI Model</a></li>
-            <li><a href="#day2"><i class="fas fa-network-wired"></i> Day 2: DHCP</a></li>
-            <li><a href="#day3"><i class="fas fa-globe"></i> Day 3: HTTP/HTTPS</a></li>
-            <li><a href="#day4"><i class="fas fa-users"></i> Day 4: Team Projects</a></li>
-            <li><a href="#day5"><i class="fas fa-file-alt"></i> Day 5: Surprise Test</a></li>
-            <li><a href="#day6"><i class="fas fa-project-diagram"></i> Day 6: Baatchit App</a></li>
+            <li><a href="#day1" class="active"><i class="fas fa-layer-group"></i> Day 1: Introduction to Networking</a></li>
+            <li><a href="#day2"><i class="fas fa-network-wired"></i> Day 2: Network Types & Data</a></li>
+            <li><a href="#day3"><i class="fas fa-sitemap"></i> Day 3: OSI Model</a></li>
+            <li><a href="#day4"><i class="fas fa-globe"></i> Day 4: HTTP & DNS</a></li>
+            <li><a href="#day5"><i class="fas fa-sync-alt"></i> Day 5: Revision & DHCP</a></li>
+            <li><a href="#day6"><i class="fas fa-tools"></i> Day 6: Protocols & Diagnostics</a></li>
+            <li><a href="#day7"><i class="fas fa-microchip"></i> Day 7: Zynq Application</a></li>
             <li><a href="#resources"><i class="fas fa-book"></i> Additional Resources</a></li>
         </ul>
     </aside>
@@ -521,77 +597,285 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="content-header">
-            <h1>Cybersecurity & Networking Module</h1>
-             <div class="mentor-info">
-                    <strong><h3>Mentor:</h3></strong><h3> Gorav Sharma</h3>
-                </div>
+            <h1>7 Days Networking Documentation</h1>
+            <div class="mentor-info">
+                <h3>Mentor:</h3>
+                <h3>Gorav Sharma</h3>
+            </div>
             <button class="theme-toggle" id="themeToggle">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
         
         <section id="day1" class="doc-section">
-            <h2>Day 1: OSI Model & Data Types</h2>
+            <h2>Day 1: Introduction to Networking</h2>
             
             <div class="day-card">
                 <div class="day-header">
                     <div class="day-number">1</div>
-                    <h3 class="day-title">OSI Model Layers & Data Types</h3>
+                    <h3 class="day-title">Fundamentals of Networking</h3>
                 </div>
                 <div class="day-content">
-                    <p>On the first day, we learned about the OSI (Open Systems Interconnection) model and different types of data.</p>
+                    <p>We began with the very building blocks of networking—understanding how information travels between systems.</p>
                     
-                    <h4>7 Layers of OSI Model:</h4>
-                    <ol>
-                        <li><strong>Physical Layer</strong> - Transmission of raw bit streams over physical medium</li>
-                        <li><strong>Data Link Layer</strong> - Error detection and correction, MAC addresses</li>
-                        <li><strong>Network Layer</strong> - Logical addressing and routing (IP addresses)</li>
-                        <li><strong>Transport Layer</strong> - End-to-end connections and reliability (TCP/UDP)</li>
-                        <li><strong>Session Layer</strong> - Establishing, managing, and terminating connections</li>
-                        <li><strong>Presentation Layer</strong> - Data translation, encryption, and compression</li>
-                        <li><strong>Application Layer</strong> - Network services to applications (HTTP, FTP, SMTP)</li>
-                    </ol>
+                    <h4>Key Concepts</h4>
                     
-                    <h4>Types of Data:</h4>
+                    <h5>Components of Communication:</h5>
+                    <ul>
+                        <li><strong>Sender</strong> → the origin of the message (e.g., computer, smartphone)</li>
+                        <li><strong>Receiver</strong> → the target device receiving the information</li>
+                        <li><strong>Transmission Medium</strong> → cables (coaxial, fiber optic, twisted pair) or wireless (Wi-Fi, radio)</li>
+                        <li><strong>Message</strong> → the actual data being transmitted</li>
+                        <li><strong>Protocol</strong> → the set of rules governing communication (e.g., TCP/IP)</li>
+                    </ul>
+                    
+                    <h5>Modes of Communication:</h5>
                     <div class="topics-grid">
                         <div class="topic-card">
-                            <h4><i class="fas fa-user-check"></i> Voluntary Data</h4>
-                            <p>Information that users knowingly provide, such as registration forms, survey responses, or preferences.</p>
+                            <h4><i class="fas fa-arrow-right"></i> Simplex</h4>
+                            <p>One-way communication (TV broadcast)</p>
                         </div>
                         <div class="topic-card">
-                            <h4><i class="fas fa-binoculars"></i> Observed Data</h4>
-                            <p>Information collected by observing user actions, like website browsing patterns, purchase history, or location data.</p>
+                            <h4><i class="fas fa-exchange-alt"></i> Half-duplex</h4>
+                            <p>Alternating both ways (walkie-talkies)</p>
                         </div>
                         <div class="topic-card">
-                            <h4><i class="fas fa-brain"></i> Inferred Data</h4>
-                            <p>Information derived from analyzing voluntary and observed data to make predictions about preferences, behaviors, or characteristics.</p>
+                            <h4><i class="fas fa-arrows-alt-h"></i> Full-duplex</h4>
+                            <p>Simultaneous both ways (phone calls, video calls)</p>
                         </div>
                     </div>
+                    
+                    <h5>Analog vs Digital Signals:</h5>
+                    <p>Digital dominates due to noise immunity, easier processing, error detection, and higher reliability.</p>
+                    
+                    <h5>Essential Characteristics of Networking:</h5>
+                    <p>Speed, Accuracy, Reliability, Security.</p>
+                    
+                    <h5>Real-world Link</h5>
+                    <p>A WhatsApp message → broken into packets → travels through Wi-Fi/mobile network → passes through routers, ISPs, undersea cables → reassembled on the recipient's device.</p>
                 </div>
             </div>
         </section>
         
         <section id="day2" class="doc-section">
-            <h2>Day 2: DHCP Concepts</h2>
+            <h2>Day 2: Types of Network & Nature of Data</h2>
             
             <div class="day-card">
                 <div class="day-header">
                     <div class="day-number">2</div>
+                    <h3 class="day-title">Network Scaling and Data Flow</h3>
+                </div>
+                <div class="day-content">
+                    <p>We zoomed out to understand network scaling and how data flows.</p>
+                    
+                    <h4>Types of Networks</h4>
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-home"></i> LAN (Local Area Network)</h4>
+                            <p>Small area (e.g., home Wi-Fi, office)</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-city"></i> MAN (Metropolitan Area Network)</h4>
+                            <p>City-wide coverage</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-globe"></i> WAN (Wide Area Network)</h4>
+                            <p>Country or global (ISPs, the Internet)</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-user"></i> PAN (Personal Area Network)</h4>
+                            <p>Very short range (Bluetooth, hotspot)</p>
+                        </div>
+                    </div>
+                    
+                    <h4>Network Models</h4>
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-server"></i> Client-Server Model</h4>
+                            <p>Centralized control (Google Drive, Banking)</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-users"></i> Peer-to-Peer Model</h4>
+                            <p>Equal role devices, sharing directly (BitTorrent)</p>
+                        </div>
+                    </div>
+                    
+                    <h4>Performance Factors</h4>
+                    <ul>
+                        <li><strong>Bandwidth</strong>: Maximum data transfer rate</li>
+                        <li><strong>Latency</strong>: Time delay in transmission (critical in real-time apps like stock trading)</li>
+                    </ul>
+                    
+                    <h4>Nature of Data</h4>
+                    <ul>
+                        <li><strong>Oriented (Structured)</strong>: Databases, spreadsheets</li>
+                        <li><strong>Observed</strong>: Sensor data from IoT</li>
+                        <li><strong>Inferred</strong>: Predictions/analytics from AI/ML</li>
+                    </ul>
+                    
+                    <h5>Real-world Link</h5>
+                    <p>IoT ecosystems mix all network types: Smart homes use PAN/LAN, cities use MAN, cloud connectivity relies on WAN.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day3" class="doc-section">
+            <h2>Day 3: The OSI Model Demystified</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">3</div>
+                    <h3 class="day-title">7-Layer OSI Stack</h3>
+                </div>
+                <div class="day-content">
+                    <p>We decoded the famous 7-layer OSI stack.</p>
+                    
+                    <h4>OSI Model Layers</h4>
+
+                    
+                    <div class="osi-diagram">
+                        <div class="osi-layer">
+                            <div class="layer-number">7</div>
+                            <div class="layer-info">
+                                <div class="layer-name">Application Layer</div>
+                                <div class="layer-desc">User-level communication</div>
+                                <div class="layer-protocols">HTTP, FTP, SMTP</div>
+                            </div>
+                        </div>
+                        <div class="osi-layer">
+                            <div class="layer-number">6</div>
+                            <div class="layer-info">
+                                <div class="layer-name">Presentation Layer</div>
+                                <div class="layer-desc">Data format conversion</div>
+                                <div class="layer-protocols">SSL/TLS, compression</div>
+                            </div>
+                        </div>
+                        <div class="osi-layer">
+                            <div class="layer-number">5</div>
+                            <div class="layer-info">
+                                <div class="layer-name">Session Layer</div>
+                                <div class="layer-desc">Manages sessions</div>
+                                <div class="layer-protocols">RPC, NetBIOS</div>
+                            </div>
+                        </div>
+                        <div class="osi-layer">
+                            <div class="layer-number">4</div>
+                            <div class="layer-info">
+                                <div class="layer-name">Transport Layer</div>
+                                <div class="layer-desc">Reliable delivery</div>
+                                <div class="layer-protocols">TCP, UDP</div>
+                            </div>
+                        </div>
+                        <div class="osi-layer">
+                            <div class="layer-number">3</div>
+                            <div class="layer-info">
+                                <div class="layer-name">Network Layer</div>
+                                <div class="layer-desc">Logical addressing, routing</div>
+                                <div class="layer-protocols">IP, ICMP</div>
+                            </div>
+                        </div>
+                        <div class="osi-layer">
+                            <div class="layer-number">2</div>
+                            <div class="layer-info">
+                                <div class="layer-name">Data Link Layer</div>
+                                <div class="layer-desc">Error-free transmission, MAC addresses</div>
+                                <div class="layer-protocols">Ethernet, ARP</div>
+                            </div>
+                        </div>
+                        <div class="osi-layer">
+                            <div class="layer-number">1</div>
+                            <div class="layer-info">
+                                <div class="layer-name">Physical Layer</div>
+                                <div class="layer-desc">Bits over cables/wireless</div>
+                                <div class="layer-protocols">Ethernet, Wi-Fi</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h4>Encapsulation & De-encapsulation</h4>
+                    <p>Data is wrapped with headers & footers at each layer, then unwrapped at the destination.</p>
+                    
+                    <h4>Hands-on</h4>
+                    <ul>
+                        <li><code>ping</code> → test connectivity</li>
+                        <li><code>traceroute</code> → map a packet's journey hop by hop</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day4" class="doc-section">
+            <h2>Day 4: Inside the Web – HTTP & DNS</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">4</div>
+                    <h3 class="day-title">Web Protocols</h3>
+                </div>
+                <div class="day-content">
+                    <p>We explored the protocols that power the web.</p>
+                    
+                    <h4>DNS (Domain Name System)</h4>
+                    <p>Works like a phonebook: converts example.com → IP address.</p>
+                    <p><code>nslookup</code> tool → check DNS mappings.</p>
+                    
+                    <h4>HTTP/HTTPS</h4>
+                    
+                    <h5>Methods:</h5>
+                    <ul>
+                        <li><strong>GET</strong> → fetch data</li>
+                        <li><strong>POST</strong> → send data</li>
+                        <li><strong>PUT</strong> → update data</li>
+                        <li><strong>DELETE</strong> → remove data</li>
+                    </ul>
+                    <p>Basis of RESTful APIs.</p>
+                    
+                    <h5>Response Codes</h5>
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-check-circle"></i> 2xx</h4>
+                            <p>Success</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-redo"></i> 3xx</h4>
+                            <p>Redirection</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-exclamation-circle"></i> 4xx</h4>
+                            <p>Client errors</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-server"></i> 5xx</h4>
+                            <p>Server errors</p>
+                        </div>
+                    </div>
+                    
+                    <h4>Lab Work</h4>
+                    <p>Used browser dev tools to monitor requests/responses, caching, and DNS lookups.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day5" class="doc-section">
+            <h2>Day 5: Revision & DHCP in Action</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">5</div>
                     <h3 class="day-title">Dynamic Host Configuration Protocol</h3>
                 </div>
                 <div class="day-content">
-                    <p>On the second day, we explored DHCP (Dynamic Host Configuration Protocol) and its related concepts.</p>
+                    <p>We revised key concepts and explored DHCP in detail.</p>
                     
-                    <h4>Key DHCP Concepts:</h4>
+                    <h4>Static vs Dynamic IP</h4>
                     <ul>
-                        <li>Automatically assigns IP addresses to devices on a network</li>
-                        <li>Uses a client-server model with DORA process (Discover, Offer, Request, Acknowledge)</li>
-                        <li>Manages IP address allocation through leases with renewal timers</li>
-                        <li>Provides other network configuration parameters (subnet mask, default gateway, DNS servers)</li>
-                        <li>Reduces manual configuration effort and prevents IP conflicts</li>
+                        <li><strong>Static</strong>: Fixed IP (servers)</li>
+                        <li><strong>Dynamic</strong>: Changing IP, assigned by DHCP</li>
                     </ul>
                     
-                    <h4>DHCP Process:</h4>
+                    <h4>DHCP (Dynamic Host Configuration Protocol)</h4>
+                    
+                    <h5>Handshake Process:</h5>
                     <div class="code-block">
                         <span class="code-comment"># DHCP Transaction Process (DORA)</span><br>
                         1. <span class="command">DHCPDISCOVER</span> - Client broadcasts to find available DHCP servers<br>
@@ -600,220 +884,65 @@
                         4. <span class="command">DHCPACK</span> - Server acknowledges and assigns the IP address lease
                     </div>
                     
-                    <div class="topics-grid">
-                        <div class="topic-card">
-                            <h4><i class="fas fa-server"></i> DHCP Server</h4>
-                            <p>Responsible for managing IP address pools and assigning addresses to clients.</p>
-                        </div>
-                        <div class="topic-card">
-                            <h4><i class="fas fa-desktop"></i> DHCP Client</h4>
-                            <p>Device that requests network configuration parameters from a DHCP server.</p>
-                        </div>
-                        <div class="topic-card">
-                            <h4><i class="fas fa-recycle"></i> IP Lease</h4>
-                            <p>Temporary assignment of an IP address with a specific duration before renewal.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="day3" class="doc-section">
-            <h2>Day 3: HTTP & HTTPS</h2>
-            
-            <div class="day-card">
-                <div class="day-header">
-                    <div class="day-number">3</div>
-                    <h3 class="day-title">Web Protocols & Security</h3>
-                </div>
-                <div class="day-content">
-                    <p>On the third day, we learned about HTTP, HTTPS, and related web protocols.</p>
-                    
-                    <h4>HTTP (HyperText Transfer Protocol):</h4>
-                    <ul>
-                        <li>Application layer protocol for transmitting hypermedia documents</li>
-                        <li>Uses a request-response model between clients and servers</li>
-                        <li>Stateless protocol (each request is independent)</li>
-                        <li>Uses TCP port 80 by default</li>
-                        <li>Request methods: GET, POST, PUT, DELETE, HEAD, OPTIONS, etc.</li>
-                    </ul>
-                    
-                    <h4>HTTPS (HTTP Secure):</h4>
-                    <ul>
-                        <li>Extension of HTTP with encryption for secure communication</li>
-                        <li>Uses TLS/SSL to encrypt the data transferred</li>
-                        <li>Uses TCP port 443 by default</li>
-                        <li>Provides authentication, data integrity, and confidentiality</li>
-                        <li>Indicated by padlock icon in browser address bar</li>
-                    </ul>
-                    
-                    <div class="code-block">
-                        <span class="code-comment"># Example HTTP Request</span><br>
-                        <span class="command">GET</span> /index.html HTTP/1.1<br>
-                        <span class="command">Host</span>: www.example.com<br>
-                        <span class="command">User-Agent</span>: Mozilla/5.0<br>
-                        <span class="command">Accept</span>: text/html,application/xhtml+xml<br>
-                        <span class="command">Connection</span>: close<br>
-                    </div>
-                    
-                    <div class="topics-grid">
-                        <div class="topic-card">
-                            <h4><i class="fas fa-lock"></i> SSL/TLS</h4>
-                            <p>Cryptographic protocols designed to provide communications security over a network.</p>
-                        </div>
-                        <div class="topic-card">
-                            <h4><i class="fas fa-certificate"></i> Digital Certificates</h4>
-                            <p>Electronic documents used to prove the ownership of a public key, issued by Certificate Authorities.</p>
-                        </div>
-                        <div class="topic-card">
-                            <h4><i class="fas fa-exchange-alt"></i> Handshake Protocol</h4>
-                            <p>Process of establishing a secure connection between client and server before data transmission.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="day4" class="doc-section">
-            <h2>Day 4: Team Projects</h2>
-            
-            <div class="day-card">
-                <div class="day-header">
-                    <div class="day-number">4</div>
-                    <h3 class="day-title">Application Development Teams</h3>
-                </div>
-                <div class="day-content">
-                    <p>On the fourth day, our mentors divided us into two teams to work on application and website development projects.</p>
-                    
-                    <h4>Team Structure:</h4>
-                    <ul>
-                        <li>Two teams were formed: App Development Team and Web Development Team</li>
-                        <li>Each team had specific roles: project manager, UI/UX designer, frontend developer, backend developer</li>
-                        <li>We followed Agile methodology with daily stand-ups and sprints</li>
-                        <li>Used GitHub for version control and collaboration</li>
-                    </ul>
-                    
-                    <h4>Project Goals:</h4>
-                    <div class="topics-grid">
-                        <div class="topic-card">
-                            <h4><i class="fas fa-mobile-alt"></i> App Team</h4>
-                            <p>Developed a cross-platform mobile application with React Native focusing on cybersecurity education.</p>
-                        </div>
-                        <div class="topic-card">
-                            <h4><i class="fas fa-laptop-code"></i> Web Team</h4>
-                            <p>Created a responsive web application with interactive cybersecurity tutorials and simulations.</p>
-                        </div>
-                    </div>
-                    
-                    <h4>Technologies Used:</h4>
-                    <ul>
-                        <li>Frontend: HTML5, CSS3, JavaScript, React.js, React Native</li>
-                        <li>Backend: Node.js, Express.js, MongoDB</li>
-                        <li>Security: JWT authentication, encryption, input validation</li>
-                        <li>Tools: Git, VS Code, Postman, Figma</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        
-        <section id="day5" class="doc-section">
-            <h2>Day 5: Surprise Test</h2>
-            
-            <div class="day-card">
-                <div class="day-header">
-                    <div class="day-number">5</div>
-                    <h3 class="day-title">Knowledge Assessment</h3>
-                </div>
-                <div class="day-content">
-                    <p>On the fifth day, we had a surprise test to evaluate our understanding of the cybersecurity and networking concepts covered in the previous days.</p>
-                    
-                    <h4>Test Topics:</h4>
-                    <ul>
-                        <li>OSI model layers and their functions</li>
-                        <li>Data types: voluntary, observed, and inferred</li>
-                        <li>DHCP process and components</li>
-                        <li>Differences between HTTP and HTTPS</li>
-                        <li>SSL/TLS encryption principles</li>
-                        <li>Basic network troubleshooting commands</li>
-                    </ul>
-                    
-                    <h4>Test Format:</h4>
-                    <div class="topics-grid">
-                        <div class="topic-card">
-                            <h4><i class="fas fa-check-circle"></i> Multiple Choice</h4>
-                            <p>Questions with four options testing conceptual understanding.</p>
-                        </div>
-                        <div class="topic-card">
-                            <h4><i class="fas fa-pen"></i> Diagram Labeling</h4>
-                            <p>Labeling OSI model layers and data flow diagrams.</p>
-                        </div>
-                        <div class="topic-card">
-                            <h4><i class="fas fa-terminal"></i> Practical Exercises</h4>
-                            <p>Using command line tools to troubleshoot network issues.</p>
-                        </div>
-                    </div>
-                    
-                    <h4>Key Learnings:</h4>
-                    <p>The test helped reinforce our understanding of fundamental networking concepts and identified areas where we needed further study. It emphasized the importance of both theoretical knowledge and practical skills in cybersecurity.</p>
+                    <h4>Hands-on</h4>
+                    <p>Checked a router's DHCP lease table → observed how ISPs assign IPs dynamically.</p>
                 </div>
             </div>
         </section>
         
         <section id="day6" class="doc-section">
-            <h2>Day 6: Baatchit Application</h2>
+            <h2>Day 6: Low-Level Protocols & Diagnostics</h2>
             
             <div class="day-card">
                 <div class="day-header">
                     <div class="day-number">6</div>
-                    <h3 class="day-title">Project Presentation</h3>
+                    <h3 class="day-title">Protocols and Troubleshooting</h3>
                 </div>
                 <div class="day-content">
-                    <p>On the final day, we presented our completed application named "Baatchit" - a secure messaging platform with cybersecurity features.</p>
+                    <p>We explored low-level protocols and diagnostic tools.</p>
                     
-                    <h4>Baatchit Features:</h4>
-                    <ul>
-                        <li>End-to-end encryption for all messages</li>
-                        <li>Self-destructing messages with configurable timer</li>
-                        <li>Two-factor authentication for enhanced security</li>
-                        <li>Secure file sharing with encryption</li>
-                        <li>Message recall functionality</li>
-                        <li>Screen security to prevent screenshots</li>
-                    </ul>
-                    
-                    <h4>Color Theme:</h4>
-                    <p>We implemented the color theme as requested with the following scheme:</p>
+                    <h4>Key Protocols</h4>
                     <div class="topics-grid">
-                        <div class="topic-card" style="border-left-color: #D96C80;">
-                            <h4><i class="fas fa-palette"></i> Primary Color</h4>
-                            <p>#D96C80 - Used for main buttons and highlights</p>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-address-card"></i> ARP (Address Resolution Protocol)</h4>
+                            <p>IP ↔ MAC mapping in a LAN</p>
                         </div>
-                        <div class="topic-card" style="border-left-color: #BF2A52;">
-                            <h4><i class="fas fa-palette"></i> Secondary Color</h4>
-                            <p>#BF2A52 - Used for headers and important elements</p>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-broadcast-tower"></i> ICMP (Internet Control Message Protocol)</h4>
+                            <p>Used by ping & traceroute</p>
                         </div>
-                        <div class="topic-card" style="border-left-color: #BFB74B;">
-                            <h4><i class="fas fa-palette"></i> Accent Color</h4>
-                            <p>#BFB74B - Used for notifications and warnings</p>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-handshake"></i> DHCP Acknowledge</h4>
+                            <p>Final confirmation of allocated IP</p>
                         </div>
                     </div>
                     
-                    <h4>Technical Implementation:</h4>
-                    <div class="code-block">
-                        <span class="code-comment">// Example of message encryption function</span><br>
-                        <span class="command">function</span> encryptMessage(message, key) {<br>
-                        &nbsp;&nbsp;<span class="command">const</span> cipher = CryptoJS.AES.encrypt(message, key);<br>
-                        &nbsp;&nbsp;<span class="command">return</span> cipher.toString();<br>
-                        }<br><br>
-                        
-                        <span class="code-comment">// Self-destruct timer implementation</span><br>
-                        <span class="command">function</span> setSelfDestruct(messageId, seconds) {<br>
-                        &nbsp;&nbsp;<span class="command">setTimeout</span>(() => {<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;deleteMessage(messageId);<br>
-                        &nbsp;&nbsp;}, seconds * 1000);<br>
-                        }
-                    </div>
+                    <h4>Hands-on</h4>
+                    <p>Used diagnostic tools to trace packets, identify bottlenecks, and debug connections.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="day7" class="doc-section">
+            <h2>Day 7: From Theory to Zynq-Based Application</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number">7</div>
+                    <h3 class="day-title">Practical Implementation</h3>
+                </div>
+                <div class="day-content">
+                    <p>We applied our networking knowledge to a real-world embedded application.</p>
                     
-                    <p>The Baatchit application successfully demonstrated our understanding of cybersecurity principles and our ability to implement them in a practical application.</p>
+                    <h4>Mini-Project</h4>
+                    <p>Designed a Zynq FPGA-based network application.</p>
+                    <p>Applied concepts like DHCP, ARP, ICMP in real-time embedded networking.</p>
+                    
+                    <h4>Takeaways</h4>
+                    <ul>
+                        <li>Understood how embedded systems communicate with larger networks</li>
+                        <li>Connected networking knowledge to IoT, industrial automation, edge computing</li>
+                    </ul>
                 </div>
             </div>
         </section>
