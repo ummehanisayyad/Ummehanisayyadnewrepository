@@ -465,6 +465,54 @@
             color: var(--primary);
         }
         
+        /* Image styling */
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .image-caption {
+            font-style: italic;
+            margin-top: 10px;
+            color: var(--text);
+            opacity: 0.8;
+        }
+        
+        /* Project UML Diagram */
+        .uml-diagram {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .uml-class {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .uml-class-name {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .uml-attributes, .uml-methods {
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+        
         /* Animations */
         @keyframes fadeIn {
             from {
@@ -569,6 +617,7 @@
             <li><a href="#day4"><i class="fas fa-cube"></i> Day 4: Variables & Data Types</a></li>
             <li><a href="#day5"><i class="fas fa-calculator"></i> Day 5: Expressions & Operators</a></li>
             <li><a href="#day6"><i class="fas fa-exchange-alt"></i> Day 6: Conversion & Flow Control</a></li>
+            <li><a href="#project"><i class="fas fa-car"></i> Vehicle Management System</a></li>
             <li><a href="#resources"><i class="fas fa-book"></i> Resources</a></li>
         </ul>
     </aside>
@@ -603,6 +652,11 @@
                         <li>Write once, run anywhere (WORA) capability</li>
                         <li>Java applications are typically compiled to bytecode that can run on any JVM</li>
                     </ul>
+                    
+                    <div class="image-container">
+                        <img src="https://via.placeholder.com/800x400/2D2B55/FFFFFF?text=Java+Programming+Language" alt="Java Programming Language">
+                        <div class="image-caption">Java is one of the most popular programming languages worldwide</div>
+                    </div>
                     
                     <h4>Need for OOP:</h4>
                     <ul>
@@ -674,6 +728,7 @@
                         </div>
                     </div>
                     
+                    
                     <h4>Applications of Java:</h4>
                     <ul>
                         <li>Desktop GUI applications</li>
@@ -720,6 +775,8 @@
                         <li><strong>High Performance</strong>: Just-In-Time compiler enables high performance</li>
                         <li><strong>Distributed</strong>: Designed for distributed environment</li>
                     </ul>
+                    
+                    
                     
                     <h4>Java Program Structure:</h4>
                     <div class="code-block">
@@ -820,6 +877,8 @@
                         </tbody>
                     </table>
                     
+
+                    
                     <h4>Java Operators:</h4>
                     <div class="topics-grid">
                         <div class="topic-card">
@@ -883,6 +942,8 @@
                         <li>Assignment: =, +=, -=, *=, /=, %=, etc.</li>
                     </ol>
                     
+                    
+                    
                     <h4>Associativity:</h4>
                     <p>When operators have the same precedence, associativity determines the order of evaluation:</p>
                     <ul>
@@ -927,6 +988,7 @@
                         </div>
                     </div>
                     
+                    
                     <h4>Flow Control Structures:</h4>
                     <p>Java provides several flow control structures:</p>
                     
@@ -962,6 +1024,159 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;}<br>
                         }
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="project" class="doc-section">
+            <h2>Vehicle Management System Project</h2>
+            
+            <div class="day-card">
+                <div class="day-header">
+                    <div class="day-number"><i class="fas fa-car"></i></div>
+                    <h3 class="day-title">Applying OOP Concepts in a Real Project</h3>
+                </div>
+                <div class="day-content">
+                    <p>This project demonstrates the application of Object-Oriented Programming concepts learned throughout the module.</p>
+                    
+                    <h4>Problem Statement: Vehicle Management System</h4>
+                    <p>Design and implement a Java application that demonstrates Object-Oriented Programming concepts up to OOPs (without advanced features like databases or multithreading).</p>
+                    
+                    <h4>Requirements:</h4>
+                    <ul>
+                        <li>The system should manage different types of vehicles such as Car, Bike, and Truck</li>
+                        <li>All vehicles share common attributes: Brand, Model, Price</li>
+                        <li>Each type of vehicle has additional attributes:
+                            <ul>
+                                <li>Car → Number of doors</li>
+                                <li>Bike → Type of bike (e.g., Sports, Cruiser)</li>
+                                <li>Truck → Load capacity (in tons)</li>
+                            </ul>
+                        </li>
+                        <li>Use an abstract class or interface for the base Vehicle definition</li>
+                        <li>Implement inheritance where Car, Bike, and Truck extend Vehicle</li>
+                        <li>Use method overriding to display vehicle details differently for each type</li>
+                        <li>Use encapsulation to ensure proper data hiding (private fields with getters/setters)</li>
+                        <li>Demonstrate polymorphism by storing different types of vehicles in a single collection and displaying their details through a loop</li>
+                        <li>The program should be menu-driven (optional for extra challenge):
+                            <ul>
+                                <li>Add a vehicle</li>
+                                <li>View all vehicles</li>
+                                <li>Exit</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+
+                    
+                    <h4>Project Implementation:</h4>
+                    
+                    <div class="uml-diagram">
+                        <div class="uml-class">
+                            <div class="uml-class-name">Vehicle (Abstract Class)</div>
+                            <div class="uml-attributes">- brand: String<br>- model: String<br>- price: double</div>
+                            <div class="uml-methods">+ displayDetails(): void<br>+ getBrand(): String<br>+ setBrand(String): void</div>
+                        </div>
+                        
+                        <div class="flow-arrow">↓ (extends)</div>
+                        
+                        <div class="uml-class">
+                            <div class="uml-class-name">Car</div>
+                            <div class="uml-attributes">- numberOfDoors: int</div>
+                            <div class="uml-methods">+ displayDetails(): void</div>
+                        </div>
+                        
+                        <div class="uml-class">
+                            <div class="uml-class-name">Bike</div>
+                            <div class="uml-attributes">- bikeType: String</div>
+                            <div class="uml-methods">+ displayDetails(): void</div>
+                        </div>
+                        
+                        <div class="uml-class">
+                            <div class="uml-class-name">Truck</div>
+                            <div class="uml-attributes">- loadCapacity: double</div>
+                            <div class="uml-methods">+ displayDetails(): void</div>
+                        </div>
+                    </div>
+                    
+                    <h4>Code Implementation:</h4>
+                    
+                    <div class="code-block">
+                        <span class="code-comment">// Abstract Vehicle class</span><br>
+                        <span class="code-tag">public abstract class</span> <span class="code-attr">Vehicle</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">private</span> String brand;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">private</span> String model;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">private</span> <span class="code-tag">double</span> price;<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Constructor</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public</span> Vehicle(String brand, String model, <span class="code-tag">double</span> price) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">this</span>.brand = brand;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">this</span>.model = model;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">this</span>.price = price;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Abstract method to be implemented by subclasses</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public abstract void</span> displayDetails();<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Getters and setters (encapsulation)</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public</span> String getBrand() { <span class="code-tag">return</span> brand; }<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public void</span> setBrand(String brand) { <span class="code-tag">this</span>.brand = brand; }<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// ... other getters and setters</span><br>
+                        }
+                    </div>
+                    
+                    <div class="code-block">
+                        <span class="code-comment">// Car class extending Vehicle</span><br>
+                        <span class="code-tag">public class</span> <span class="code-attr">Car</span> <span class="code-tag">extends</span> Vehicle {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">private int</span> numberOfDoors;<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public</span> Car(String brand, String model, <span class="code-tag">double</span> price, <span class="code-tag">int</span> numberOfDoors) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">super</span>(brand, model, price);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">this</span>.numberOfDoors = numberOfDoors;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Method overriding</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">@Override</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public void</span> displayDetails() {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="code-value">"Car: "</span> + getBrand() + <span class="code-value">" "</span> + getModel() + <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-value">", Price: $"</span> + getPrice() + <span class="code-value">", Doors: "</span> + numberOfDoors);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                    
+                    <div class="code-block">
+                        <span class="code-comment">// Main class demonstrating polymorphism</span><br>
+                        <span class="code-tag">import</span> java.util.ArrayList;<br>
+                        <span class="code-tag">import</span> java.util.List;<br><br>
+                        <span class="code-tag">public class</span> <span class="code-attr">VehicleManagementSystem</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">public static void</span> <span class="code-attr">main</span>(String[] args) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List<Vehicle> vehicles = <span class="code-tag">new</span> ArrayList<>();<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Adding different types of vehicles</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vehicles.add(<span class="code-tag">new</span> Car(<span class="code-value">"Toyota"</span>, <span class="code-value">"Camry"</span>, 25000, 4));<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vehicles.add(<span class="code-tag">new</span> Bike(<span class="code-value">"Harley-Davidson"</span>, <span class="code-value">"Sportster"</span>, 12000, <span class="code-value">"Cruiser"</span>));<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vehicles.add(<span class="code-tag">new</span> Truck(<span class="code-value">"Ford"</span>, <span class="code-value">"F-150"</span>, 35000, 2.5));<br><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Demonstrating polymorphism</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">for</span> (Vehicle vehicle : vehicles) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vehicle.displayDetails(); <span class="code-comment">// Calls appropriate overridden method</span><br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        }
+                    </div>
+                    
+                    <h4>Key OOP Concepts Demonstrated:</h4>
+                    <div class="topics-grid">
+                        <div class="topic-card">
+                            <h4><i class="fas fa-project-diagram"></i> Inheritance</h4>
+                            <p>Car, Bike, and Truck classes inherit from the Vehicle base class</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-sync-alt"></i> Polymorphism</h4>
+                            <p>Different vehicle types stored in a single collection and processed uniformly</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-lock"></i> Encapsulation</h4>
+                            <p>Private fields with public getters and setters for data protection</p>
+                        </div>
+                        <div class="topic-card">
+                            <h4><i class="fas fa-code"></i> Abstraction</h4>
+                            <p>Vehicle class is abstract with an abstract displayDetails method</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1038,7 +1253,7 @@
             }
         });
         
-                // Close menu when clicking on a link
+        // Close menu when clicking on a link
         document.querySelectorAll('.sidebar-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 sidebar.classList.remove('active');
